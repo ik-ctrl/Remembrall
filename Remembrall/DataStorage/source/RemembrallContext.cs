@@ -25,11 +25,11 @@ namespace DataStorage.source
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ConfigurationPeople(modelBuilder);
-            ConfigurationEmail(modelBuilder);
-            ConfigurationPhone(modelBuilder);
-            ConfigurationRelationship(modelBuilder);
-            ConfigurationNotes(modelBuilder);
+            ConfigurationPeopleEntity(modelBuilder);
+            ConfigurationEmailEntity(modelBuilder);
+            ConfigurationPhoneEntity(modelBuilder);
+            ConfigurationRelationshipEntity(modelBuilder);
+            ConfigurationNotesEntity(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -43,27 +43,27 @@ namespace DataStorage.source
 
 
         #region config region 
-        private void ConfigurationPhone(ModelBuilder builder)
+        private void ConfigurationPhoneEntity(ModelBuilder builder)
         {
 
         }
 
-        private void ConfigurationEmail(ModelBuilder builder)
+        private void ConfigurationEmailEntity(ModelBuilder builder)
         {
 
         }
 
-        private void ConfigurationRelationship(ModelBuilder builder)
+        private void ConfigurationRelationshipEntity(ModelBuilder builder)
         {
 
         }
 
-        private void ConfigurationPeople(ModelBuilder builder)
+        private void ConfigurationPeopleEntity(ModelBuilder builder)
         {
 
         }
 
-        private void ConfigurationNotes(ModelBuilder builder)
+        private void ConfigurationNotesEntity(ModelBuilder builder)
         {
 
         }
