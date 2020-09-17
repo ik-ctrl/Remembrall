@@ -22,6 +22,7 @@ namespace DataStorage.source
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             _counter++;
+            //todo: вынести  в файл настройки  строку подключения
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=storageDB;Trusted_Connection=True;");
         }
 
