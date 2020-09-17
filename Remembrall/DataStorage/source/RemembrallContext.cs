@@ -6,10 +6,9 @@ namespace DataStorage.source
 {
     public class RemembrallContext : DbContext
     {
-        /// <summary>
-        /// Счётчик  открытых соединений
-        /// </summary>
+        
         private static int _counter = 0;
+
         public RemembrallContext()
         {
 
@@ -50,7 +49,13 @@ namespace DataStorage.source
         /// Таблица хранения записей
         /// </summary>
         public DbSet<Note> Notes { get; set; }
-
+        /// <summary>
+        /// Счётчик открытых соединений
+        /// </summary>
+        public int Counter
+        {
+            get => _counter;
+        }
 
         #region config region 
         private void ConfigurationPhoneEntity(ModelBuilder builder)
@@ -87,8 +92,6 @@ namespace DataStorage.source
                     value=>(RelationshipEnum)Enum.Parse(typeof(RelationshipEnum),value));
         }
         #endregion
-
-
 
         public void Dispose()
         {
