@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace DataStorage.source
+namespace DataStorage.Source
 {
     public class DesignDbContext:IDesignTimeDbContextFactory<RemembrallContext>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataStorage.source.Entity
+namespace DataStorage.Source.Entity
 {
     public class Person
     {

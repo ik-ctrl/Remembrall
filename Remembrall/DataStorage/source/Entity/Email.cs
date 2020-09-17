@@ -1,4 +1,4 @@
-﻿namespace DataStorage.source.Entity
+﻿namespace DataStorage.Source.Entity
 {
     public class Email
     {

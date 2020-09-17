@@ -1,8 +1,8 @@
 ﻿using System;
-using DataStorage.source.Entity;
+using DataStorage.Source.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataStorage.source
+namespace DataStorage.Source
 {
     public class RemembrallContext : DbContext
     {
