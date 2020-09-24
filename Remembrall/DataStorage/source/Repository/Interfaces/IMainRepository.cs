@@ -30,5 +30,9 @@ namespace DataStorage.Source.Repository
         /// Сохранение изменений
         /// </summary>
         public void SaveChanges();
+        /// <summary>
+        /// Метод для удаления базы данных
+        /// </summary>
+        public void DeleteDatabase();
     }
 }

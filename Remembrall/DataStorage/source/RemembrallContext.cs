@@ -94,6 +94,10 @@ namespace DataStorage.Source
         }
         #endregion
 
+        public void  DeleteDatabase()
+        {
+            Database.EnsureDeleted();
+        }
         public void Dispose()
         {
             _counter--;

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using DataStorage.Source.Entity;
 using DataStorage.Source.Repository.Interfaces;
 
 namespace DataStorage.Source.Repository
 {
-    class MainSqlRepository:IMainRepository
+    public class MainSqlRepository:IMainRepository
     {
         private RemembrallContext _context;
         private bool _disposed;
@@ -40,7 +36,12 @@ namespace DataStorage.Source.Repository
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
+        }
+
+        public void DeleteDatabase()
+        {
+            _context.DeleteDatabase();
         }
 
         public object Clone()
