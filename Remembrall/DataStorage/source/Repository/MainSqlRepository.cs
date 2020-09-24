@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using DataStorage.Source.Entity;
+using DataStorage.Source.Repository.Interfaces;
 
 namespace DataStorage.Source.Repository
 {
     class MainSqlRepository:IMainRepository
     {
         private RemembrallContext _context;
-        private bool disposed;
+        private bool _disposed;
 
         public MainSqlRepository()
         {
@@ -18,13 +19,15 @@ namespace DataStorage.Source.Repository
             NotesRepository=new SqlNoteRepository(_context);
             EmailsRepository= new SqlEmailRepository(_context);
             PhonesRepository = new SqlPhoneRepository(_context);
-            disposed = false;
+            _disposed = false;
         }
 
-        public IRepository<Person> PersonRepository { get; set; }
-        public IRepository<Note> NotesRepository { get; set; }
-        public IRepository<Email> EmailsRepository { get; set; }
-        public IRepository<Phone> PhonesRepository { get; set; }
+
+        public IPersonRepository PersonRepository { get; set; }
+        public INoteRepository NotesRepository { get; set; }
+        public IEmailRepository EmailsRepository { get; set; }
+        public IPhoneRepository PhonesRepository { get; set; }
+
         public void ResetContext()
         {
             _context = null;
@@ -34,6 +37,12 @@ namespace DataStorage.Source.Repository
             EmailsRepository = new SqlEmailRepository(_context);
             PhonesRepository = new SqlPhoneRepository(_context);
         }
+
+        public void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
         public object Clone()
         {
             return new RemembrallContext();
@@ -41,7 +50,7 @@ namespace DataStorage.Source.Repository
 
         public virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
@@ -50,7 +59,7 @@ namespace DataStorage.Source.Repository
                     EmailsRepository = null;
                     PhonesRepository = null;
                     _context?.Dispose();
-                    disposed = true;
+                    _disposed = true;
                 }
             }
            

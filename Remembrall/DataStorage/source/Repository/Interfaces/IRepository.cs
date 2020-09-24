@@ -18,12 +18,7 @@ namespace DataStorage.Source.Repository
         /// </summary>
         /// <param name="condition"> входящие условие</param>
         /// <returns></returns>
-        IEnumerable<T> GetItemByCondition(Expression<Func<T, bool>> condition);
-        /// <summary>
-        /// Метод для возвращения таблицы (для сложных запросов)
-        /// </summary>
-        /// <returns></returns>
-        DbSet<T> GetTable();
+        IEnumerable<T> Find(Expression<Func<T, bool>> condition);
         /// <summary>
         /// Получение элемента по идентификатору
         /// </summary>
@@ -60,9 +55,5 @@ namespace DataStorage.Source.Repository
         /// </summary>
         /// <param name="items">количество объектов </param>
         void DeleteRange(IEnumerable<T> items);
-        /// <summary>
-        /// Сохранения изменений в БД
-        /// </summary>
-        void Save();
     }
 }

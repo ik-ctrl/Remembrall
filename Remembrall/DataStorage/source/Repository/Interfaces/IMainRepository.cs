@@ -1,5 +1,6 @@
 ﻿using System;
 using DataStorage.Source.Entity;
+using DataStorage.Source.Repository.Interfaces;
 
 namespace DataStorage.Source.Repository
 {
@@ -8,23 +9,26 @@ namespace DataStorage.Source.Repository
         /// <summary>
         /// Репозиторий для работы с таблицей людей
         /// </summary>
-        IRepository<Person> PersonRepository { get; set; }
+        IPersonRepository PersonRepository { get; set; }
         /// <summary>
         /// Репозиторий для работы с таблицей людей
         /// </summary>
-        IRepository<Note> NotesRepository { get; set; }
+        INoteRepository NotesRepository { get; set; }
         /// <summary>
         /// Репозиторий для работы с таблицей людей
         /// </summary>
-        IRepository<Email> EmailsRepository { get; set; }
+        IEmailRepository EmailsRepository { get; set; }
         /// <summary>
         /// Репозиторий для работы с таблицей людей
         /// </summary>
-        IRepository<Phone> PhonesRepository { get; set; }
+        IPhoneRepository PhonesRepository { get; set; }
         /// <summary>
         /// Метод для обновления контекста.
         /// </summary>
         public void ResetContext();
-
+        /// <summary>
+        /// Сохранение изменений
+        /// </summary>
+        public void SaveChanges();
     }
 }
