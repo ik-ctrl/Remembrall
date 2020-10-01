@@ -34,5 +34,14 @@ namespace DataStorage.Source.Repository
         /// Метод для удаления базы данных
         /// </summary>
         public void DeleteDatabase();
+        /// <summary>
+        /// Метод для проверки подключения к БД.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsConnect();
+        /// <summary>
+        /// Загрузка миграций
+        /// </summary>
+        public void DeployMigration();
     }
 }

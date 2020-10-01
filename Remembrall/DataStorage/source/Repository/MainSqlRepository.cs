@@ -1,5 +1,6 @@
 ﻿using System;
 using DataStorage.Source.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataStorage.Source.Repository
 {
@@ -44,11 +45,22 @@ namespace DataStorage.Source.Repository
             _context.DeleteDatabase();
         }
 
+        public bool IsConnect()
+        {
+            return _context.Database.CanConnect();
+        }
+
+        public void DeployMigration()
+        {
+            _context.Database.Migrate();
+        }
+
         public object Clone()
         {
             return new RemembrallContext();
         }
 
+        #region Dispose
         public virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -63,7 +75,6 @@ namespace DataStorage.Source.Repository
                     _disposed = true;
                 }
             }
-           
         }
 
         public void Dispose()
@@ -71,5 +82,7 @@ namespace DataStorage.Source.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
+
     }
 }
