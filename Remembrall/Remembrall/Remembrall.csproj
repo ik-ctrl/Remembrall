@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Source\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataStorage\DataStorage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Source\Interfaces\" />
   </ItemGroup>
 
 </Project>
