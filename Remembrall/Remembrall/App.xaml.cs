@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using DataStorage.Source.Repository;
 
@@ -20,7 +15,6 @@ namespace Remembrall
             IMainRepository mainRepository = new MainSqlRepository();
             CheckConnection(mainRepository);
             DeployMigration(mainRepository);
-
         }
 
         private void DeployMigration(IMainRepository main)
@@ -32,6 +26,7 @@ namespace Remembrall
         {
             var counter = 0;
             var isConnect = false;
+
             while (counter < 5)
             {
                 isConnect = main.IsConnect();
