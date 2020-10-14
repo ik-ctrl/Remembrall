@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataStorage.Migrations
 {
     [DbContext(typeof(RemembrallContext))]
-    [Migration("20201014160635_Notes_IsDoneAdd")]
-    partial class Notes_IsDoneAdd
+    [Migration("20201014163246_inited")]
+    partial class inited
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,8 @@ namespace DataStorage.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IsDone")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
 
                     b.HasKey("NoteId");
 

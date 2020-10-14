@@ -48,8 +48,8 @@ namespace DataStorage.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IsDone")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
 
                     b.HasKey("NoteId");
 
