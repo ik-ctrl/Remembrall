@@ -17,11 +17,19 @@ namespace Remembrall
             DeployMigration(mainRepository);
         }
 
+        /// <summary>
+        /// Метод для применения новых миграций
+        /// </summary>
+        /// <param name="main"></param>
         private void DeployMigration(IMainRepository main)
         {
             main.DeployMigration();
         }
 
+        /// <summary>
+        /// Метод для проверки подключения к БД
+        /// </summary>
+        /// <param name="main"></param>
         private void CheckConnection(IMainRepository main)
         {
             var counter = 0;
@@ -34,12 +42,10 @@ namespace Remembrall
                 Thread.Sleep(TimeSpan.FromSeconds(2));
                 counter++;
             }
+            if (isConnect) return;
 
-            if (!isConnect)
-            {
-                MessageBox.Show("Не удалось подключится к базе данных.\nПопробуйте позже...", "Ошибка...", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0);
-            }
+            MessageBox.Show("Не удалось подключится к базе данных.\nПопробуйте позже...", "Ошибка...", MessageBoxButton.OK, MessageBoxImage.Error);
+            Environment.Exit(0);
         }
     }
 }
