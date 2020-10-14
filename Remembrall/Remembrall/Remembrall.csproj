@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Source\Interfaces\" />
-    <Folder Include="Source\View\" />
     <Folder Include="Source\Model\" />
   </ItemGroup>
 

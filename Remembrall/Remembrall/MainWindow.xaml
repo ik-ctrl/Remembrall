@@ -7,8 +7,17 @@
         xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Remembrall" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Background="Red" Text="{Binding TEST}"></TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding TEST}"/>
+        <TextBlock Grid.Column="1" Text="{Binding TEST}"/>
+
+
+
     </Grid>
 </Window>
