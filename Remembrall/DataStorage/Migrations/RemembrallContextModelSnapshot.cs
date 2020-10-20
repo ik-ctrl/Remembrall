@@ -18,7 +18,7 @@ namespace DataStorage.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DataStorage.source.Entity.Email", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Email", b =>
                 {
                     b.Property<int>("EmailId")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace DataStorage.Migrations
                     b.ToTable("Emails");
                 });
 
-            modelBuilder.Entity("DataStorage.source.Entity.Note", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Note", b =>
                 {
                     b.Property<int>("NoteId")
                         .ValueGeneratedOnAdd()
@@ -48,15 +48,15 @@ namespace DataStorage.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
 
                     b.HasKey("NoteId");
 
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("DataStorage.source.Entity.Person", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Person", b =>
                 {
                     b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace DataStorage.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("DataStorage.source.Entity.Phone", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Phone", b =>
                 {
                     b.Property<int>("PhoneId")
                         .ValueGeneratedOnAdd()
@@ -100,18 +100,18 @@ namespace DataStorage.Migrations
                     b.ToTable("Phones");
                 });
 
-            modelBuilder.Entity("DataStorage.source.Entity.Email", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Email", b =>
                 {
-                    b.HasOne("DataStorage.source.Entity.Person", "Person")
+                    b.HasOne("DataStorage.Source.Entity.Person", "Person")
                         .WithMany("Emails")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataStorage.source.Entity.Phone", b =>
+            modelBuilder.Entity("DataStorage.Source.Entity.Phone", b =>
                 {
-                    b.HasOne("DataStorage.source.Entity.Person", "Person")
+                    b.HasOne("DataStorage.Source.Entity.Person", "Person")
                         .WithMany("Phones")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)

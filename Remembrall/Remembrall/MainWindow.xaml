@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Remembrall"
+        xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
+        xmlns:userControl="clr-namespace:Remembrall.Source.View.UserControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
+        Title="Remembrall" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding MainViewModel}">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <userControl:NotesView Grid.Column="0"></userControl:NotesView>
+        <userControl:NotificationView Grid.Column="1"></userControl:NotificationView>
 
     </Grid>
 </Window>
