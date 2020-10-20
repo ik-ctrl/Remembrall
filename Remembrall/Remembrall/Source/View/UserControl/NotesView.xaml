@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Remembrall.Source.View.UserControl"
+             xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             d:DataContext="{Binding MainViewModel}">
+             d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>
@@ -14,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black">
-
+            
         </ListBox>
 
         <Grid Grid.Row="1">

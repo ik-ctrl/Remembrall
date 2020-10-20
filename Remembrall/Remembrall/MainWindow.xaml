@@ -9,16 +9,15 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         Title="Remembrall" Height="500" Width="800"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding MainViewModel}">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="{Binding TEST}"/>
-        <TextBlock Grid.Column="1" Text="{Binding TEST}"/>
-        <userControl:NotesView></userControl:NotesView>
-
+        <userControl:NotesView Grid.Column="0"></userControl:NotesView>
+        <userControl:NotificationView Grid.Column="1"></userControl:NotificationView>
 
     </Grid>
 </Window>
