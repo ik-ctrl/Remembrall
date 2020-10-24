@@ -8,7 +8,7 @@ namespace Remembrall.Source.ViewModel
 {
     public class NoteItemViewModel
     {
-        private Note _note;
+        private readonly Note _note;
 
         public NoteItemViewModel(Note note)
         {

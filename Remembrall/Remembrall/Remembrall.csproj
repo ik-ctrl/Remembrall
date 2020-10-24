@@ -17,8 +17,4 @@
     <ProjectReference Include="..\DataStorage\DataStorage.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Source\Model\" />
-  </ItemGroup>
-
 </Project>
