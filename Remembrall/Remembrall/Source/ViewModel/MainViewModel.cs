@@ -36,8 +36,7 @@ namespace Remembrall.Source.ViewModel
 
         public ObservableCollection<NoteItemViewModel> NotesCollection
         {
-           // get => model.NoteCollection;
-           get => null;
+            get => model.NotesCollection;
         }
 
         private RelayCommand _addNoteCommand;

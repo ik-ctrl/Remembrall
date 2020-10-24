@@ -14,7 +14,9 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
-        <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black">
+        <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black"
+                   ItemsSource="{Binding NotesCollection}">
+
             
         </ListBox>
 
@@ -23,8 +25,8 @@
                 <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Background="DarkGray" Margin="5"/>
-            <Button Grid.Column="1"  Content="" Background="DarkGray" Margin="5 30 5 30"/>
+            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5"/>
+            <Button Grid.Column="1"  Content="Добавить" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5 30 5 30"/>
 
         </Grid>
     </Grid>
