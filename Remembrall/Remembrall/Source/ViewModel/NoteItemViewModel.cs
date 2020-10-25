@@ -17,7 +17,10 @@ namespace Remembrall.Source.ViewModel
 
         public string Description => _note.Description;
 
-        public bool IsDone => _note.IsDone;
-
+        public bool IsDone
+        {
+            get => _note.IsDone;
+            set => _note.IsDone = value;
+        }
     }
 }

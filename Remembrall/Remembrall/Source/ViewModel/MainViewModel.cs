@@ -38,10 +38,10 @@ namespace Remembrall.Source.ViewModel
         {
             get => model.NotesCollection;
         }
-
+        //todo: add func  for  command
         private RelayCommand _addNoteCommand;
-
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj => { AddNote(); });
+
         public void AddNote()
         {
             model.AddNote(_noteDescription.Trim());
@@ -49,8 +49,6 @@ namespace Remembrall.Source.ViewModel
             OnPropertyChanged(nameof(NoteDescription));
             OnPropertyChanged(nameof(NotesCollection));
         }
-
-
         #endregion
 
 

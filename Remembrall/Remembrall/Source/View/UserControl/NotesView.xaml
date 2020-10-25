@@ -15,7 +15,20 @@
         </Grid.RowDefinitions>
 
         <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black"
-                   ItemsSource="{Binding NotesCollection}">
+                   ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=Description}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
 
             
         </ListBox>

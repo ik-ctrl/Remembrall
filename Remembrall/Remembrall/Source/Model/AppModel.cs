@@ -38,9 +38,11 @@ namespace Remembrall.Source.Model
 
         public void AddNote(string noteDescription)
         {
-            var newNote = new Note();
-            newNote.Description = noteDescription;
-            newNote.IsDone = false;
+            var newNote = new Note
+            {
+                Description = noteDescription,
+                IsDone = false
+            };
             _repository.NotesRepository.Add(newNote);
             _repository.SaveChanges();
             _updateNotesEvent?.Invoke();
