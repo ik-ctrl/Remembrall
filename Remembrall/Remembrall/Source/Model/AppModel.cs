@@ -6,12 +6,19 @@ using System.Linq;
 using System.Text;
 using DataStorage.Source.Entity;
 using DataStorage.Source.Repository;
+using Microsoft.EntityFrameworkCore;
 using Remembrall.Source.ViewModel;
 
 namespace Remembrall.Source.Model
 {
-    internal class AppModel
+    internal class AppModel : IDisposable
     {
+        private delegate void UpdateNotesHandler();
+
+        private event UpdateNotesHandler _updateNotesEvent;
+
+
+
         private readonly IMainRepository _repository;
         private ObservableCollection<NoteItemViewModel> _notesCollection;
 
@@ -19,12 +26,13 @@ namespace Remembrall.Source.Model
         {
             _repository = new MainSqlRepository();
             _notesCollection = CreateCollection(_repository);
+            _updateNotesEvent += UpdateNotesCollection;
         }
 
 
         public ObservableCollection<NoteItemViewModel> NotesCollection
         {
-            get =>_notesCollection;
+            get => _notesCollection;
         }
 
 
@@ -35,10 +43,18 @@ namespace Remembrall.Source.Model
             newNote.IsDone = false;
             _repository.NotesRepository.Add(newNote);
             _repository.SaveChanges();
+            _updateNotesEvent?.Invoke();
+
         }
 
 
-        #region private
+        #region private methods
+
+        private void UpdateNotesCollection()
+        {
+            _notesCollection = null;
+            _notesCollection = CreateCollection(_repository);
+        }
 
         private ObservableCollection<NoteItemViewModel> CreateCollection(IMainRepository _repository)
         {
@@ -48,6 +64,12 @@ namespace Remembrall.Source.Model
 
         #endregion
 
-
+        #region dispose
+        public void Dispose()
+        {
+            _repository?.Dispose();
+            _updateNotesEvent -= UpdateNotesCollection;
+        }
+        #endregion
     }
 }

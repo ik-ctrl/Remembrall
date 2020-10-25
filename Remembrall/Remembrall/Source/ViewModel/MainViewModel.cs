@@ -12,7 +12,7 @@ using Remembrall.Source.Model;
 
 namespace Remembrall.Source.ViewModel
 {
-    public  class MainViewModel:INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         private readonly AppModel model;
         private string _noteDescription;
@@ -31,7 +31,7 @@ namespace Remembrall.Source.ViewModel
         public string NoteDescription
         {
             get => _noteDescription;
-            set => _noteDescription=value;
+            set => _noteDescription = value;
         }
 
         public ObservableCollection<NoteItemViewModel> NotesCollection
@@ -41,7 +41,7 @@ namespace Remembrall.Source.ViewModel
 
         private RelayCommand _addNoteCommand;
 
-        public ICommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(AddNote, () =>IsEmptyDescription);
+        public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj => { AddNote(); });
         public void AddNote()
         {
             model.AddNote(_noteDescription.Trim());
@@ -50,7 +50,7 @@ namespace Remembrall.Source.ViewModel
             OnPropertyChanged(nameof(NotesCollection));
         }
 
-       
+
         #endregion
 
 
