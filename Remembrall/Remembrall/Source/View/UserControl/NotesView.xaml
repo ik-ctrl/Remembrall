@@ -11,47 +11,50 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black"
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <ListBox  Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" Height=""
                   ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel HorizontalAlignment="Stretch" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="300"/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
-                        </Grid>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <ListBox  Grid.Row="1" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" Visibility="Hidden"
+            <ListBox  Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
                   ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel HorizontalAlignment="Stretch" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="300"/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
-                        </Grid>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
+        </StackPanel>
+      
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
