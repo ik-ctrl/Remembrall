@@ -10,35 +10,55 @@
              d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="20*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-
         <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black"
-                   ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
+                  ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="20"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Path=Description}"/>
-                    </Grid>
+                    <StackPanel HorizontalAlignment="Stretch" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                        </Grid>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
-            
         </ListBox>
 
-        <Grid Grid.Row="1">
+        <ListBox  Grid.Row="1" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" Visibility="Hidden"
+                  ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel HorizontalAlignment="Stretch" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5"/>
+            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5" TextWrapping="WrapWithOverflow"/>
             <Button Grid.Column="1"  Content="Добавить" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5 30 5 30"/>
 
         </Grid>
