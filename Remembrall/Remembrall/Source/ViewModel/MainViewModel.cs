@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Input;
-using DataStorage.Source.Repository;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Model;
