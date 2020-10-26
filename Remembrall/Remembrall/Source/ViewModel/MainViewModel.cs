@@ -25,8 +25,8 @@ namespace Remembrall.Source.ViewModel
 
 
         #region notes property
-
-        public bool IsEmptyDescription => string.IsNullOrEmpty(_noteDescription.Trim());
+        //todo: xyeta kakyto
+        private bool IsEmptyDescription => string.IsNullOrEmpty(_noteDescription.Trim());
 
         public string NoteDescription
         {
@@ -40,9 +40,12 @@ namespace Remembrall.Source.ViewModel
         }
         //todo: add func  for  command
         private RelayCommand _addNoteCommand;
-        public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj => { AddNote(); });
+        public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
+        {
+            AddNote();
+        });
 
-        public void AddNote()
+        private void AddNote()
         {
             model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
