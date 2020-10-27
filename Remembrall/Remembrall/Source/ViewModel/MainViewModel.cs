@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using DataStorage.Source.Entity;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Model;
@@ -11,6 +12,7 @@ namespace Remembrall.Source.ViewModel
     {
         private readonly AppModel model;
         private string _noteDescription;
+
         public MainViewModel()
         {
             model = new AppModel();
@@ -19,9 +21,15 @@ namespace Remembrall.Source.ViewModel
 
 
 
-        #region notes property
+        #region notes
+
         //todo: xyeta kakyto
-        private bool IsEmptyDescription => string.IsNullOrEmpty(_noteDescription.Trim());
+        private bool IsEmptyDescription =>
+            string.IsNullOrEmpty(_noteDescription.Trim());
+
+        public bool VisibilityCompletedCollection =>model.CompletedNotesCollection.Count !=0;
+
+
 
         public string NoteDescription
         {
@@ -29,12 +37,18 @@ namespace Remembrall.Source.ViewModel
             set => _noteDescription = value;
         }
 
-        public ObservableCollection<NoteItemViewModel> NotesCollection
+        public ObservableCollection<NoteItemViewModel> IncompletedNotesCollection
         {
-            get => model.NotesCollection;
+            get => model.IncompletedNotesCollection;
+        }
+
+        public ObservableCollection<NoteItemViewModel> CompletedNotesCollection
+        {
+            get => model.CompletedNotesCollection;
         }
         //todo: add func  for  command
         private RelayCommand _addNoteCommand;
+
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
         {
             AddNote();
@@ -45,7 +59,7 @@ namespace Remembrall.Source.ViewModel
             model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
             OnPropertyChanged(nameof(NoteDescription));
-            OnPropertyChanged(nameof(NotesCollection));
+            OnPropertyChanged(nameof(IncompletedNotesCollection));
         }
         #endregion
 

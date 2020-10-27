@@ -9,13 +9,62 @@
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
     <Grid>
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Vertical">
-            <ListBox  Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" Height=""
+        <DockPanel Grid.Row="0" LastChildFill="True">
+            <ListBox ItemsSource="{Binding Path=CompletedNotesCollection,Mode=OneWay}" 
+                     Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
+                     Height="50" DockPanel.Dock="Top"  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.Style>
+                    <Style TargetType="ListBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding VisibilityCompletedCollection}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
+                     ItemsSource="{Binding Path=IncompletedNotesCollection,Mode=OneWay}" DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+        </DockPanel>
+        <!--<ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
                   ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -33,9 +82,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <ListBox  Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
-                  ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
+        <ListBox Grid.Row="1"  Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
+                 ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" >
@@ -51,10 +99,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
-
-        </StackPanel>
-      
+            </ListBox>-->
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

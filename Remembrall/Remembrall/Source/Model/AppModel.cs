@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,28 +14,32 @@ namespace Remembrall.Source.Model
 {
     internal class AppModel : IDisposable
     {
+        #region notify event
         private delegate void UpdateNotesHandler();
-
         private event UpdateNotesHandler _updateNotesEvent;
-
-
-
+        #endregion
         private readonly IMainRepository _repository;
-        private ObservableCollection<NoteItemViewModel> _notesCollection;
-
+        private ObservableCollection<NoteItemViewModel> _incompletedIncompletedNotesCollection;
+        private ObservableCollection<NoteItemViewModel> _completedNotesCollection;
+            
         public AppModel()
         {
             _repository = new MainSqlRepository();
-            _notesCollection = CreateCollection(_repository);
+            _incompletedIncompletedNotesCollection = MakeIncompletedNotesCollection(_repository);
+            _completedNotesCollection = MakeCompletedNotesCollection(_repository);
             _updateNotesEvent += UpdateNotesCollection;
         }
 
 
-        public ObservableCollection<NoteItemViewModel> NotesCollection
+        public ObservableCollection<NoteItemViewModel> IncompletedNotesCollection
         {
-            get => _notesCollection;
+            get => _incompletedIncompletedNotesCollection;
         }
 
+        public ObservableCollection<NoteItemViewModel> CompletedNotesCollection
+        {
+            get => _completedNotesCollection;
+        }
 
         public void AddNote(string noteDescription)
         {
@@ -54,13 +59,25 @@ namespace Remembrall.Source.Model
 
         private void UpdateNotesCollection()
         {
-            _notesCollection = null;
-            _notesCollection = CreateCollection(_repository);
+            _incompletedIncompletedNotesCollection = null;
+            _completedNotesCollection = null;
+            _incompletedIncompletedNotesCollection = MakeIncompletedNotesCollection(_repository);
+            _completedNotesCollection = MakeCompletedNotesCollection(_repository);
         }
 
-        private ObservableCollection<NoteItemViewModel> CreateCollection(IMainRepository _repository)
+        private ObservableCollection<NoteItemViewModel> MakeIncompletedNotesCollection(IMainRepository _repository)
         {
-            var notes = _repository.NotesRepository.GetAllItem().Select(x => new NoteItemViewModel(x));
+            var notes = _repository.NotesRepository.GetAllItem()
+                .Where(n=>n.IsDone==false)
+                .Select(x => new NoteItemViewModel(x));
+            return new ObservableCollection<NoteItemViewModel>(notes);
+        }
+
+        private ObservableCollection<NoteItemViewModel> MakeCompletedNotesCollection(IMainRepository _repository)
+        {
+            var notes = _repository.NotesRepository.GetAllItem()
+                .Where(n => n.IsDone == true)
+                .Select(n => new NoteItemViewModel(n));
             return new ObservableCollection<NoteItemViewModel>(notes);
         }
 
