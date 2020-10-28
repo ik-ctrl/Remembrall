@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using DataStorage.Source.Entity;
+using System.Windows;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Model;
@@ -28,7 +28,7 @@ namespace Remembrall.Source.ViewModel
             string.IsNullOrEmpty(_noteDescription.Trim());
 
         public bool ShowCompletedCollection =>
-            model.CompletedNotesCollection.Count !=0;
+            model.CompletedNotesCollection.Count != 0;
 
         public string NoteDescription
         {
@@ -45,19 +45,49 @@ namespace Remembrall.Source.ViewModel
         {
             get => model.CompletedNotesCollection;
         }
+
         //todo: add func  for  command
         private RelayCommand _addNoteCommand;
-
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
         {
             AddNote();
         });
+
+        private RelayCommand _removeIncompletedNotesCommand;
+        public RelayCommand RemoveIncompletedNotesCommand => _removeIncompletedNotesCommand
+                                                             ?? new RelayCommand(obj => { RemoveIncompletedNotes(); },
+                                                                 obj => { return true; });
+
+        private RelayCommand _removeCompletedNotesCommand;
+        public RelayCommand RemoveCompletedNotesCommand => _removeCompletedNotesCommand
+                                                           ?? new RelayCommand(obj => { RemoveCompletedNotes(); }, 
+                                                               obj => { return true;});
+
+        private RelayCommand _removeSpecialNoteCommand;
+        public RelayCommand RemoveSpecialNoteCommand => _removeSpecialNoteCommand
+                                                        ?? new RelayCommand(obj => {RemoveSpecialNote(obj); });
+
 
         private void AddNote()
         {
             model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
             UpdateNoteView();
+        }
+
+        private void RemoveIncompletedNotes()
+        {
+            MessageBox.Show("Udalyaem vse pisma zavershennie");
+        }
+
+        private void RemoveCompletedNotes()
+        {
+            MessageBox.Show("Udalyaem vse pisma zavershennie");
+        }
+
+        private void RemoveSpecialNote(object obj)
+        {
+            MessageBox.Show("удаляем одну заметку");
         }
 
         private void UpdateNoteView()
