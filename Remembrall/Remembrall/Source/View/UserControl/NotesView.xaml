@@ -22,7 +22,7 @@
                 <ListBox.Style>
                     <Style TargetType="ListBox">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding VisibilityCompletedCollection}" Value="False">
+                            <DataTrigger Binding="{Binding ShowCompletedCollection}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"></Setter>
                             </DataTrigger>
                         </Style.Triggers>

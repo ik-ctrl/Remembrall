@@ -27,9 +27,8 @@ namespace Remembrall.Source.ViewModel
         private bool IsEmptyDescription =>
             string.IsNullOrEmpty(_noteDescription.Trim());
 
-        public bool VisibilityCompletedCollection =>model.CompletedNotesCollection.Count !=0;
-
-
+        public bool ShowCompletedCollection =>
+            model.CompletedNotesCollection.Count !=0;
 
         public string NoteDescription
         {
@@ -58,8 +57,15 @@ namespace Remembrall.Source.ViewModel
         {
             model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
+            UpdateNoteView();
+        }
+
+        private void UpdateNoteView()
+        {
             OnPropertyChanged(nameof(NoteDescription));
             OnPropertyChanged(nameof(IncompletedNotesCollection));
+            OnPropertyChanged(nameof(CompletedNotesCollection));
+            OnPropertyChanged(nameof(ShowCompletedCollection));
         }
         #endregion
 
