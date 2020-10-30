@@ -57,7 +57,7 @@
                                 <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
                                 <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
-                                        Command="{Binding RemoveSpecialNoteCommand,
+                                        Command="{Binding Path=RemoveSpecialNoteCommand,
                                         RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type viewModel:MainViewModel}}}"/>
                             </Grid>
                         </StackPanel>
