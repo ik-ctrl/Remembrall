@@ -10,7 +10,10 @@
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         Title="Remembrall" Height="500" Width="800"
         WindowStartupLocation="CenterScreen"
-        DataContext="{Binding MainViewModel}">
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <Binding Path="MainViewModel"></Binding>
+    </Window.DataContext>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

@@ -49,23 +49,22 @@ namespace Remembrall.Source.ViewModel
         //todo: add func  for  command
         private RelayCommand _addNoteCommand;
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
-        {
-            AddNote();
-        });
+       {
+           AddNote();
+       });
 
         private RelayCommand _removeIncompletedNotesCommand;
         public RelayCommand RemoveIncompletedNotesCommand => _removeIncompletedNotesCommand
-                                                             ?? new RelayCommand(obj => { RemoveIncompletedNotes(); },
+                                                             ??= new RelayCommand(obj => { RemoveIncompletedNotes(); },
                                                                  obj => { return true; });
-
         private RelayCommand _removeCompletedNotesCommand;
         public RelayCommand RemoveCompletedNotesCommand => _removeCompletedNotesCommand
-                                                           ?? new RelayCommand(obj => { RemoveCompletedNotes(); }, 
-                                                               obj => { return true;});
-
+                                                           ??= new RelayCommand(obj => { RemoveCompletedNotes(); },
+                                                               obj => { return true; });
+        //todo: хуета не работает . биндинг на верхнии уровни не работает.
         private RelayCommand _removeSpecialNoteCommand;
         public RelayCommand RemoveSpecialNoteCommand => _removeSpecialNoteCommand
-                                                        ?? new RelayCommand(obj => {RemoveSpecialNote(obj); });
+                                                        ??(_removeSpecialNoteCommand = new RelayCommand(obj => { RemoveSpecialNote(obj); }));
 
 
         private void AddNote()

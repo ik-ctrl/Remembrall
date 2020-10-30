@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
-    <Grid>
+    <Grid DataContext="{Binding}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
             <RowDefinition Height="*"/>
@@ -44,7 +44,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <ListBox Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
-                     ItemsSource="{Binding Path=IncompletedNotesCollection,Mode=OneWay}" DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                     ItemsSource="{Binding Path=IncompletedNotesCollection,Mode=OneWay}"  DockPanel.Dock="Top"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <!--<MenuItem Header="Очистить список" Command="{Binding Path=}" />-->
+                    </ContextMenu>
+                </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" >
@@ -56,53 +62,17 @@
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                              
                                 <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
-                                        Command="{Binding Path=RemoveSpecialNoteCommand,
-                                        RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type viewModel:MainViewModel}}}"/>
+                                        Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                                        AncestorType={x:Type Window}}}"/>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
         </DockPanel>
-        <!--<ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
-                  ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel HorizontalAlignment="Stretch" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="300"/>
-                                    <ColumnDefinition Width="30"/>
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
-                            </Grid>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        <ListBox Grid.Row="1"  Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
-                 ItemsSource="{Binding Path=NotesCollection,Mode=OneWay}" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel HorizontalAlignment="Stretch" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="300"/>
-                                    <ColumnDefinition Width="30"/>
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
-                            </Grid>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
