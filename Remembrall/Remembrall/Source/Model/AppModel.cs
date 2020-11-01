@@ -41,6 +41,10 @@ namespace Remembrall.Source.Model
             get => _completedNotesCollection;
         }
 
+        /// <summary>
+        /// Добавление новых записок в БД
+        /// </summary>
+        /// <param name="noteDescription"></param>
         public void AddNote(string noteDescription)
         {
             var newNote = new Note
@@ -51,10 +55,29 @@ namespace Remembrall.Source.Model
             _repository.NotesRepository.Add(newNote);
             _repository.SaveChanges();
             _updateNotesEvent?.Invoke();
-
         }
 
+        /// <summary>
+        /// Удаление  коллекций записок из БД
+        /// </summary>
+        /// <param name="notes"></param>
+        public void RemoveNotes(IEnumerable<Note> notes)
+        {
+            _repository.NotesRepository.DeleteRange(notes);
+            _repository.SaveChanges();
+            _updateNotesEvent?.Invoke();
+        }
 
+        /// <summary>
+        /// Удаление определенную записку из БД
+        /// </summary>
+        /// <param name="note"></param>
+        public void RemoveNote(Note note)
+        {
+            _repository.NotesRepository.Delete(note);
+            _repository.SaveChanges();
+            _updateNotesEvent?.Invoke();
+        }
         #region private methods
 
         private void UpdateNotesCollection()

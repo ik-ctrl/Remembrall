@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using DataStorage.Source.Entity;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Model;
@@ -18,8 +21,6 @@ namespace Remembrall.Source.ViewModel
             model = new AppModel();
             _noteDescription = string.Empty;
         }
-
-
 
         #region notes
 
@@ -48,24 +49,11 @@ namespace Remembrall.Source.ViewModel
 
         //todo: add func  for  command
         private RelayCommand _addNoteCommand;
+
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
        {
            AddNote();
        });
-
-        private RelayCommand _removeIncompletedNotesCommand;
-        public RelayCommand RemoveIncompletedNotesCommand => _removeIncompletedNotesCommand
-                                                             ??= new RelayCommand(obj => { RemoveIncompletedNotes(); },
-                                                                 obj => { return true; });
-        private RelayCommand _removeCompletedNotesCommand;
-        public RelayCommand RemoveCompletedNotesCommand => _removeCompletedNotesCommand
-                                                           ??= new RelayCommand(obj => { RemoveCompletedNotes(); },
-                                                               obj => { return true; });
-        //todo: хуета не работает . биндинг на верхнии уровни не работает.
-        private RelayCommand _removeSpecialNoteCommand;
-        public RelayCommand RemoveSpecialNoteCommand => _removeSpecialNoteCommand
-                                                        ??(_removeSpecialNoteCommand = new RelayCommand(obj => { RemoveSpecialNote(obj); }));
-
 
         private void AddNote()
         {
@@ -74,19 +62,54 @@ namespace Remembrall.Source.ViewModel
             UpdateNoteView();
         }
 
+        private RelayCommand _removeIncompletedNotesCommand;
+
+        public RelayCommand RemoveIncompletedNotesCommand => _removeIncompletedNotesCommand ??= new RelayCommand(
+            obj => { RemoveIncompletedNotes(); },
+            obj => { return IncompletedNotesCollection.Count != 0;});
+
         private void RemoveIncompletedNotes()
         {
-            MessageBox.Show("Udalyaem vse pisma zavershennie");
+            var notesVm = IncompletedNotesCollection.ToList();
+            model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
+            UpdateNoteView();
         }
+
+        private RelayCommand _removeCompletedNotesCommand;
+
+        public RelayCommand RemoveCompletedNotesCommand => _removeCompletedNotesCommand
+            ??= new RelayCommand(obj => { RemoveCompletedNotes(); },
+                obj => { return CompletedNotesCollection.Count != 0;});
 
         private void RemoveCompletedNotes()
         {
-            MessageBox.Show("Udalyaem vse pisma zavershennie");
+            var notesVm = CompletedNotesCollection.ToList();
+            model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
+            UpdateNoteView();
         }
+
+        private RelayCommand _removeSpecialNoteCommand;
+
+        public RelayCommand RemoveSpecialNoteCommand => _removeSpecialNoteCommand ??= new RelayCommand(obj => { RemoveSpecialNote(obj); });
 
         private void RemoveSpecialNote(object obj)
         {
-            MessageBox.Show("удаляем одну заметку");
+            if (obj is NoteItemViewModel note)
+            {
+                model.RemoveNote(note.Note);
+                UpdateNoteView();
+            }
+
+        }
+
+        private IEnumerable<Note> ConvertNoteItemViewModelToNote(IEnumerable<NoteItemViewModel> notesVm)
+        {
+            var notes = new List<Note>();
+            foreach (var item in notesVm)
+            {
+                notes.Add(item.Note);
+            }
+            return notes;
         }
 
         private void UpdateNoteView()

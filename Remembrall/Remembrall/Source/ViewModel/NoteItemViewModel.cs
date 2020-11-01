@@ -22,5 +22,7 @@ namespace Remembrall.Source.ViewModel
             get => _note.IsDone;
             set => _note.IsDone = value;
         }
+
+        public Note Note => _note;
     }
 }
