@@ -57,6 +57,8 @@ namespace Remembrall.Source.ViewModel
 
         private void AddNote()
         {
+            if (string.IsNullOrEmpty(NoteDescription.Trim())) 
+                return;
             model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
             UpdateNoteView();
@@ -90,7 +92,8 @@ namespace Remembrall.Source.ViewModel
 
         private RelayCommand _removeSpecialNoteCommand;
 
-        public RelayCommand RemoveSpecialNoteCommand => _removeSpecialNoteCommand ??= new RelayCommand(obj => { RemoveSpecialNote(obj); });
+        public RelayCommand RemoveSpecialNoteCommand =>
+            _removeSpecialNoteCommand ??= new RelayCommand(obj => { RemoveSpecialNote(obj); });
 
         private void RemoveSpecialNote(object obj)
         {
