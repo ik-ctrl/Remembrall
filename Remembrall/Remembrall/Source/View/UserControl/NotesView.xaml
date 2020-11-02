@@ -88,7 +88,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5"
                           TextWrapping="Wrap"  ContextMenu="{x:Null}"/>
-            <Button Grid.Column="1"  Content="Добавить" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5 30 5 30"/>
+            <Button Grid.Column="1"  Content="Добавить" Height="25" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5"/>
 
         </Grid>
     </Grid>
