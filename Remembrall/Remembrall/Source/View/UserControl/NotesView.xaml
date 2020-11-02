@@ -37,7 +37,7 @@
                                     <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
                                 <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
                                         Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
                                         RelativeSource={RelativeSource FindAncestor,
@@ -54,18 +54,6 @@
             <ListBox Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
                      ItemsSource="{Binding Path=IncompletedNotesCollection,Mode=OneWay}"  DockPanel.Dock="Top"
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-                <!--<ListBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Очистить список" 
-                                  Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
-                                        RelativeSource={RelativeSource FindAncestor,
-                                                        AncestorType={x:Type Window}}}"
-                                  />
-                        --><!--Command="{Binding Path= DataContext.RemoveIncompletedNotesCommand,
-                                        RelativeSource={RelativeSource FindAncestor,
-                                                        AncestorType={x:Type Window}}}"--><!--
-                    </ContextMenu>
-                </ListBox.ContextMenu>-->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" >
@@ -75,8 +63,11 @@
                                     <ColumnDefinition Width="290"/>
                                     <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="WrapWithOverflow"/>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          Command="{Binding Path= DataContext.NoteStatusUpdateCommand,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                                        AncestorType={x:Type Window}}}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
                                 <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
                                         Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
                                         RelativeSource={RelativeSource FindAncestor,
@@ -95,7 +86,8 @@
                 <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5" TextWrapping="WrapWithOverflow"  ContextMenu="{x:Null}"/>
+            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5"
+                          TextWrapping="Wrap"  ContextMenu="{x:Null}"/>
             <Button Grid.Column="1"  Content="Добавить" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5 30 5 30"/>
 
         </Grid>

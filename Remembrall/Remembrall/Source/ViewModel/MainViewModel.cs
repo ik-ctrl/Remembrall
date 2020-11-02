@@ -13,23 +13,18 @@ namespace Remembrall.Source.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private readonly AppModel model;
+        private readonly AppModel _model;
         private string _noteDescription;
 
         public MainViewModel()
         {
-            model = new AppModel();
+            _model = new AppModel();
             _noteDescription = string.Empty;
         }
 
-        #region notes
+        #region notes view
 
-        //todo: xyeta kakyto
-        private bool IsEmptyDescription =>
-            string.IsNullOrEmpty(_noteDescription.Trim());
-
-        public bool ShowCompletedCollection =>
-            model.CompletedNotesCollection.Count != 0;
+        public bool ShowCompletedCollection => _model.CompletedNotesCollection.Count != 0;
 
         public string NoteDescription
         {
@@ -39,15 +34,14 @@ namespace Remembrall.Source.ViewModel
 
         public ObservableCollection<NoteItemViewModel> IncompletedNotesCollection
         {
-            get => model.IncompletedNotesCollection;
+            get => _model.IncompletedNotesCollection;
         }
 
         public ObservableCollection<NoteItemViewModel> CompletedNotesCollection
         {
-            get => model.CompletedNotesCollection;
+            get => _model.CompletedNotesCollection;
         }
 
-        //todo: add func  for  command
         private RelayCommand _addNoteCommand;
 
         public RelayCommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(obj =>
@@ -57,36 +51,36 @@ namespace Remembrall.Source.ViewModel
 
         private void AddNote()
         {
-            if (string.IsNullOrEmpty(NoteDescription.Trim())) 
+            if (string.IsNullOrEmpty(_noteDescription.Trim())) 
                 return;
-            model.AddNote(_noteDescription.Trim());
+            _model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
             UpdateNoteView();
         }
 
         private RelayCommand _removeIncompletedNotesCommand;
 
-        public RelayCommand RemoveIncompletedNotesCommand => _removeIncompletedNotesCommand ??= new RelayCommand(
-            obj => { RemoveIncompletedNotes(); },
-            obj => { return IncompletedNotesCollection.Count != 0;});
+        public RelayCommand RemoveIncompletedNotesCommand => 
+            _removeIncompletedNotesCommand ??= new RelayCommand(obj => { RemoveIncompletedNotes(); }, 
+                                    obj => { return IncompletedNotesCollection.Count != 0;});
 
         private void RemoveIncompletedNotes()
         {
             var notesVm = IncompletedNotesCollection.ToList();
-            model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
+            _model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
             UpdateNoteView();
         }
 
         private RelayCommand _removeCompletedNotesCommand;
 
-        public RelayCommand RemoveCompletedNotesCommand => _removeCompletedNotesCommand
-            ??= new RelayCommand(obj => { RemoveCompletedNotes(); },
+        public RelayCommand RemoveCompletedNotesCommand => 
+            _removeCompletedNotesCommand  ??= new RelayCommand(obj => { RemoveCompletedNotes(); }, 
                 obj => { return CompletedNotesCollection.Count != 0;});
 
         private void RemoveCompletedNotes()
         {
             var notesVm = CompletedNotesCollection.ToList();
-            model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
+            _model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
             UpdateNoteView();
         }
 
@@ -99,10 +93,21 @@ namespace Remembrall.Source.ViewModel
         {
             if (obj is NoteItemViewModel note)
             {
-                model.RemoveNote(note.Note);
+                _model.RemoveNote(note.Note);
                 UpdateNoteView();
             }
 
+        }
+
+        private RelayCommand _noteStatusUpdateCommand;
+
+        public RelayCommand NoteStatusUpdateCommand =>
+            _noteStatusUpdateCommand ??= new RelayCommand(obj => { NoteStatusUpdate(); });
+
+        private void NoteStatusUpdate()
+        {
+            _model.NoteStatusUpdate();
+            UpdateNoteView();
         }
 
         private IEnumerable<Note> ConvertNoteItemViewModelToNote(IEnumerable<NoteItemViewModel> notesVm)
@@ -115,6 +120,9 @@ namespace Remembrall.Source.ViewModel
             return notes;
         }
 
+
+        #endregion
+
         private void UpdateNoteView()
         {
             OnPropertyChanged(nameof(NoteDescription));
@@ -122,9 +130,6 @@ namespace Remembrall.Source.ViewModel
             OnPropertyChanged(nameof(CompletedNotesCollection));
             OnPropertyChanged(nameof(ShowCompletedCollection));
         }
-        #endregion
-
-
         #region property changed
         public event PropertyChangedEventHandler PropertyChanged;
 

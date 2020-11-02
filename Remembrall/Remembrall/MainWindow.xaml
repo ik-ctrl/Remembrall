@@ -15,12 +15,24 @@
         <Binding Path="MainViewModel"></Binding>
     </Window.DataContext>
     <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <userControl:NotesView Grid.Column="0"></userControl:NotesView>
-        <userControl:NotificationView Grid.Column="1"></userControl:NotificationView>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Записи">
+                <MenuItem Header ="Удалить список выполненных заметок" Command="{Binding Path= RemoveCompletedNotesCommand}"/>
+                <MenuItem Header ="Удалить список невыполненных заметок" Command="{Binding Path = RemoveIncompletedNotesCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Телефонная книга"/>
+        </Menu>
+
+        <userControl:NotesView  Grid.Row="1" Grid.Column="0"></userControl:NotesView>
+        <userControl:NotificationView Grid.Row="1" Grid.Column="1"></userControl:NotificationView>
 
     </Grid>
 </Window>

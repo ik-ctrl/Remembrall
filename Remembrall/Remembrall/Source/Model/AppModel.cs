@@ -30,12 +30,17 @@ namespace Remembrall.Source.Model
             _updateNotesEvent += UpdateNotesCollection;
         }
 
-
+        /// <summary>
+        /// Коллекция нвыполненных заметок
+        /// </summary>
         public ObservableCollection<NoteItemViewModel> IncompletedNotesCollection
         {
             get => _incompletedIncompletedNotesCollection;
         }
 
+        /// <summary>
+        /// Коллекция выполненых заметок
+        /// </summary>
         public ObservableCollection<NoteItemViewModel> CompletedNotesCollection
         {
             get => _completedNotesCollection;
@@ -78,6 +83,17 @@ namespace Remembrall.Source.Model
             _repository.SaveChanges();
             _updateNotesEvent?.Invoke();
         }
+        
+        /// <summary>
+        ///  Метод для обновления статуса заметки
+        /// </summary>
+        public void NoteStatusUpdate()
+        {
+            _repository.SaveChanges();
+            _updateNotesEvent?.Invoke();
+        }
+
+
         #region private methods
 
         private void UpdateNotesCollection()
