@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Remembrall.Source.View.UserControl
 {
     /// <summary>
-    /// Логика взаимодействия для NotificationView.xaml
+    /// Логика взаимодействия для CalendarView.xaml
     /// </summary>
-    public partial class NotificationView : System.Windows.Controls.UserControl
+    public partial class CalendarView : System.Windows.Controls.UserControl
     {
-        public NotificationView()
+        public CalendarView()
         {
             InitializeComponent();
         }

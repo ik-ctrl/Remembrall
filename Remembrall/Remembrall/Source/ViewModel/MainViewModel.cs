@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
+using System.Xml.Serialization;
 using DataStorage.Source.Entity;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
@@ -14,12 +18,14 @@ namespace Remembrall.Source.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly AppModel _model;
+        private readonly Timer _autoUpdateViewTimer;
         private string _noteDescription;
-
         public MainViewModel()
         {
             _model = new AppModel();
+            _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
             _noteDescription = string.Empty;
+            
         }
 
         #region notes
@@ -72,11 +78,11 @@ namespace Remembrall.Source.ViewModel
         /// </summary>
         private void AddNote()
         {
-            if (string.IsNullOrEmpty(_noteDescription.Trim())) 
+            if (string.IsNullOrEmpty(_noteDescription.Trim()))
                 return;
             _model.AddNote(_noteDescription.Trim());
             _noteDescription = string.Empty;
-            UpdateNoteView();
+            UpdateView();
         }
 
         /// <summary>
@@ -87,9 +93,9 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Свойство для обращения к команде для удаления всей коллекции невыполненных заметок
         /// </summary>
-        public RelayCommand RemoveIncompletedNotesCommand => 
-            _removeIncompletedNotesCommand ??= new RelayCommand(obj => { RemoveIncompletedNotes(); }, 
-                                    obj => { return IncompletedNotesCollection.Count != 0;});
+        public RelayCommand RemoveIncompletedNotesCommand =>
+            _removeIncompletedNotesCommand ??= new RelayCommand(obj => { RemoveIncompletedNotes(); },
+                                    obj => { return IncompletedNotesCollection.Count != 0; });
 
         /// <summary>
         /// Метод для удаления коллекции невыполненных заметок
@@ -98,7 +104,7 @@ namespace Remembrall.Source.ViewModel
         {
             var notesVm = IncompletedNotesCollection.ToList();
             _model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
-            UpdateNoteView();
+            UpdateView();
         }
 
         /// <summary>
@@ -109,9 +115,9 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Свойство для обращения к команде для удаления всей коллекции выполненных заметок
         /// </summary>
-        public RelayCommand RemoveCompletedNotesCommand => 
-            _removeCompletedNotesCommand  ??= new RelayCommand(obj => { RemoveCompletedNotes(); }, 
-                obj => { return CompletedNotesCollection.Count != 0;});
+        public RelayCommand RemoveCompletedNotesCommand =>
+            _removeCompletedNotesCommand ??= new RelayCommand(obj => { RemoveCompletedNotes(); },
+                obj => { return CompletedNotesCollection.Count != 0; });
 
         /// <summary>
         /// Метод для удаления коллекции выполненных заметок
@@ -120,7 +126,7 @@ namespace Remembrall.Source.ViewModel
         {
             var notesVm = CompletedNotesCollection.ToList();
             _model.RemoveNotes(ConvertNoteItemViewModelToNote(notesVm));
-            UpdateNoteView();
+            UpdateView();
         }
 
         /// <summary>
@@ -142,7 +148,7 @@ namespace Remembrall.Source.ViewModel
             if (obj is NoteItemViewModel note)
             {
                 _model.RemoveNote(note.Note);
-                UpdateNoteView();
+                UpdateView();
             }
 
         }
@@ -164,7 +170,7 @@ namespace Remembrall.Source.ViewModel
         private void NoteStatusUpdate()
         {
             _model.NoteStatusUpdate();
-            UpdateNoteView();
+            UpdateView();
         }
 
         /// <summary>
@@ -183,17 +189,42 @@ namespace Remembrall.Source.ViewModel
         }
         #endregion
 
+
+        #region calendar
+
+        public string CurrentTime => DateTime.Now.ToString("HH:mm:ss");
+
+
+
+        #endregion
+
+        #region update view
         /// <summary>
-        /// Метод для обновления графический элементов.
+        ///  Метод для автоматического обновления графических элементов раз в 250 миллисекунд
         /// </summary>
-        private void UpdateNoteView()
+        /// <param name="obj"></param>
+        private  void AutoUpdateView(object obj)
+        {
+            OnPropertyChanged(nameof(CurrentTime));
+        }
+
+        /// <summary>
+        /// Метод для обновления графический элементов  вручную.
+        /// </summary>
+        private void UpdateView()
         {
             OnPropertyChanged(nameof(NoteDescription));
             OnPropertyChanged(nameof(IncompletedNotesCollection));
             OnPropertyChanged(nameof(CompletedNotesCollection));
             OnPropertyChanged(nameof(ShowCompletedCollection));
         }
-        
+        #endregion
+
+
+
+
+
+
         #region property changed
 
         /// <summary>
