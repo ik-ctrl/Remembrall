@@ -8,23 +8,87 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
-    <Grid>
+    <Grid DataContext="{Binding}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" LastChildFill="True">
+            <ListBox ItemsSource="{Binding Path=CompletedNotesCollection,Mode=OneWay}" 
+                     Background="DarkGreen" Margin ="5" BorderThickness="3" BorderBrush="Black" 
+                     Height="50" DockPanel.Dock="Top"  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.Style>
+                    <Style TargetType="ListBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowCompletedCollection}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="290"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
+                                <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
+                                        Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                                        AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding DataContext,
+                                                         RelativeSource= {RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type StackPanel}}}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <ListBox  Grid.Row="0" Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black">
-            
-        </ListBox>
-
-        <Grid Grid.Row="1">
+            <ListBox Background="DarkGray" Margin ="5" BorderThickness="3" BorderBrush="Black" 
+                     ItemsSource="{Binding Path=IncompletedNotesCollection,Mode=OneWay}"  DockPanel.Dock="Top"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="290"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          Command="{Binding Path= DataContext.NoteStatusUpdateCommand,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                                        AncestorType={x:Type Window}}}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
+                                <Button Grid.Column="2" Content="X" Background="DarkRed" Height="20" Width="20"
+                                        Command="{Binding Path= DataContext.RemoveSpecialNoteCommand,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                                        AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding DataContext,
+                                                         RelativeSource= {RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type StackPanel}}}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Background="DarkGray" Margin="5"/>
-            <Button Grid.Column="1"  Content="" Background="DarkGray" Margin="5 30 5 30"/>
+            <TextBox Grid.Column="0" Text="{Binding NoteDescription}" Background="DarkGray" Margin="5"
+                          TextWrapping="Wrap"  ContextMenu="{x:Null}"/>
+            <Button Grid.Column="1"  Content="Добавить" Height="25" Background="DarkGray" Command="{Binding AddNoteCommand}" Margin="5"/>
 
         </Grid>
     </Grid>

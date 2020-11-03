@@ -8,7 +8,7 @@ namespace Remembrall.Source.ViewModel
 {
     public class NoteItemViewModel
     {
-        private Note _note;
+        private readonly Note _note;
 
         public NoteItemViewModel(Note note)
         {
@@ -17,7 +17,12 @@ namespace Remembrall.Source.ViewModel
 
         public string Description => _note.Description;
 
-        public bool IsDone => _note.IsDone;
+        public bool IsDone
+        {
+            get => _note.IsDone;
+            set => _note.IsDone = value;
+        }
 
+        public Note Note => _note;
     }
 }
