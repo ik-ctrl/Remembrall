@@ -16,11 +16,12 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding CurrentTime,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"  
                    FontSize="20" FontFamily="Bold" />
+
         <Viewbox Grid.Row="1">
-            <Calendar  SelectionMode="SingleDate"/>
+            <Calendar  SelectionMode="None"/>
         </Viewbox>
 
-        <GroupBox Grid.Row="2" Header="Уведомления" Margin="10">
+        <GroupBox Grid.Row="2" Header="Описания дня" Margin="10">
             <ListBox >
 
             </ListBox>
