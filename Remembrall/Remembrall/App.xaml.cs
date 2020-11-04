@@ -15,6 +15,7 @@ namespace Remembrall
             IMainRepository mainRepository = new MainSqlRepository();
             CheckConnection(mainRepository);
             DeployMigration(mainRepository);
+
         }
 
         /// <summary>

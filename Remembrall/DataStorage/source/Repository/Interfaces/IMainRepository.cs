@@ -22,6 +22,12 @@ namespace DataStorage.Source.Repository
         /// Репозиторий для работы с таблицей людей
         /// </summary>
         IPhoneRepository PhonesRepository { get; set; }
+
+        /// <summary>
+        /// Репозиторий для хранения специальных дат
+        /// </summary>
+        ISpecialDateRepository SpecialDateRepository { get; set; }
+
         /// <summary>
         /// Метод для обновления контекста.
         /// </summary>

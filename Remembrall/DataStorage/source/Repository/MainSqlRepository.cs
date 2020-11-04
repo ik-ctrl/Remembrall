@@ -16,6 +16,7 @@ namespace DataStorage.Source.Repository
             NotesRepository=new SqlNoteRepository(_context);
             EmailsRepository= new SqlEmailRepository(_context);
             PhonesRepository = new SqlPhoneRepository(_context);
+            SpecialDateRepository = new SqlSpecialDateRepository(_context);
             _disposed = false;
         }
 
@@ -24,6 +25,7 @@ namespace DataStorage.Source.Repository
         public INoteRepository NotesRepository { get; set; }
         public IEmailRepository EmailsRepository { get; set; }
         public IPhoneRepository PhonesRepository { get; set; }
+        public ISpecialDateRepository SpecialDateRepository { get; set; }
 
         public void ResetContext()
         {
@@ -33,6 +35,7 @@ namespace DataStorage.Source.Repository
             NotesRepository = new SqlNoteRepository(_context);
             EmailsRepository = new SqlEmailRepository(_context);
             PhonesRepository = new SqlPhoneRepository(_context);
+            SpecialDateRepository= new SqlSpecialDateRepository(_context);
         }
 
         public void SaveChanges()
