@@ -16,17 +16,18 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding CurrentTime,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"  
                    FontSize="20" FontFamily="Bold" />
-
-        <Viewbox Grid.Row="1">
-            <Calendar  SelectionMode="None"/>
+        <Viewbox Grid.Row="1" Stretch="Uniform" StretchDirection="UpOnly">
+            <Calendar  SelectionMode="MultipleRange"/>
         </Viewbox>
-
-        <GroupBox Grid.Row="2" Header="Описания дня" Margin="10">
-            <ListBox >
-
+        <GroupBox Grid.Row="2" Header="Праздники в этом месяце " Margin="10">
+            <ListBox  ItemsSource="{Binding Path=SpecialDatesCollection, Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="Green" Foreground="White" Text="{Binding Path=CurrentDayInfo}" 
+                                   TextWrapping="Wrap" TextAlignment="Center" Width="345" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </GroupBox>
-
-
     </Grid>
 </UserControl>

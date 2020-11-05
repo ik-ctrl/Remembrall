@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Windows;
-using System.Xml.Serialization;
 using DataStorage.Source.Entity;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
@@ -194,7 +191,7 @@ namespace Remembrall.Source.ViewModel
 
         public string CurrentTime => DateTime.Now.ToString("HH:mm:ss");
 
-
+        public ObservableCollection<SpecialDateViewModel> SpecialDatesCollection => _model.SpecialDateCollection;
 
         #endregion
 
