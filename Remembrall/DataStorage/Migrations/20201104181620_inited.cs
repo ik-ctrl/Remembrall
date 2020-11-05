@@ -36,6 +36,21 @@ namespace DataStorage.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SpecialDates",
+                columns: table => new
+                {
+                    SpecialDateId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Day = table.Column<int>(nullable: false),
+                    Month = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpecialDates", x => x.SpecialDateId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emails",
                 columns: table => new
                 {
@@ -75,6 +90,31 @@ namespace DataStorage.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "SpecialDates",
+                columns: new[] { "SpecialDateId", "Day", "Description", "Month" },
+                values: new object[,]
+                {
+                    { 1, 1, "Новогодние выходные", 1 },
+                    { 16, 1, "День знаний", 9 },
+                    { 15, 12, "День независимости", 6 },
+                    { 14, 9, "День Победы", 5 },
+                    { 13, 3, "Мир, труд, май!!!", 5 },
+                    { 12, 1, "Мир, труд, май!!!", 5 },
+                    { 11, 8, "праздник женщин", 3 },
+                    { 10, 23, "День защитника отечества", 2 },
+                    { 9, 14, "День всех влюбленных", 2 },
+                    { 8, 8, "Новогодние выходные", 1 },
+                    { 7, 7, "Новогодние выходные", 1 },
+                    { 6, 6, "Новогодние выходные", 1 },
+                    { 5, 5, "Новогодние выходные", 1 },
+                    { 4, 4, "Новогодние выходные", 1 },
+                    { 3, 3, "Новогодние выходные", 1 },
+                    { 2, 2, "Новогодние выходные", 1 },
+                    { 17, 4, "День народного единства", 11 },
+                    { 18, 31, "Новый год! С праздником!!!", 12 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Emails_PersonId",
                 table: "Emails",
@@ -96,6 +136,9 @@ namespace DataStorage.Migrations
 
             migrationBuilder.DropTable(
                 name: "Phones");
+
+            migrationBuilder.DropTable(
+                name: "SpecialDates");
 
             migrationBuilder.DropTable(
                 name: "People");

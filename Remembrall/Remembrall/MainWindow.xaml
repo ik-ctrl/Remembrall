@@ -32,7 +32,7 @@
         </Menu>
 
         <userControl:NotesView  Grid.Row="1" Grid.Column="0"></userControl:NotesView>
-        <userControl:NotificationView Grid.Row="1" Grid.Column="1"></userControl:NotificationView>
+        <userControl:CalendarView Grid.Row="1" Grid.Column="1"></userControl:CalendarView>
 
     </Grid>
 </Window>

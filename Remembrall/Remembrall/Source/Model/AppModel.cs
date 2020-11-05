@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using DataStorage.Source.Entity;
 using DataStorage.Source.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Remembrall.Source.ViewModel;
 
 namespace Remembrall.Source.Model
@@ -21,14 +23,33 @@ namespace Remembrall.Source.Model
         private readonly IMainRepository _repository;
         private ObservableCollection<NoteItemViewModel> _incompletedIncompletedNotesCollection;
         private ObservableCollection<NoteItemViewModel> _completedNotesCollection;
-            
+        private ObservableCollection<SpecialDateViewModel> _specialDateCollection;
+
         public AppModel()
         {
             _repository = new MainSqlRepository();
             _incompletedIncompletedNotesCollection = MakeIncompletedNotesCollection(_repository);
             _completedNotesCollection = MakeCompletedNotesCollection(_repository);
+            _specialDateCollection = MakeSpecialDateCollection(_repository);
             _updateNotesEvent += UpdateNotesCollection;
         }
+
+        #region calendar
+
+        public ObservableCollection<SpecialDateViewModel> SpecialDateCollection => _specialDateCollection;
+
+
+        private ObservableCollection<SpecialDateViewModel> MakeSpecialDateCollection(IMainRepository _repository)
+        {
+            var currentMonth = DateTime.Now.Month;
+            var dates = _repository.SpecialDateRepository.Find(item => item.Month == currentMonth)
+                .Select(date => new SpecialDateViewModel(date)).ToList();
+            return new ObservableCollection<SpecialDateViewModel>(dates);
+        }
+
+        #endregion
+
+        #region note
 
         /// <summary>
         /// Коллекция нвыполненных заметок
@@ -83,7 +104,7 @@ namespace Remembrall.Source.Model
             _repository.SaveChanges();
             _updateNotesEvent?.Invoke();
         }
-        
+
         /// <summary>
         ///  Метод для обновления статуса заметки
         /// </summary>
@@ -93,6 +114,7 @@ namespace Remembrall.Source.Model
             _updateNotesEvent?.Invoke();
         }
 
+        #endregion
 
         #region private methods
 
@@ -107,7 +129,7 @@ namespace Remembrall.Source.Model
         private ObservableCollection<NoteItemViewModel> MakeIncompletedNotesCollection(IMainRepository _repository)
         {
             var notes = _repository.NotesRepository.GetAllItem()
-                .Where(n=>n.IsDone==false)
+                .Where(n => n.IsDone == false)
                 .Select(x => new NoteItemViewModel(x));
             return new ObservableCollection<NoteItemViewModel>(notes);
         }

@@ -15,6 +15,5 @@ namespace DataStorage.Source.Entity
         public RelationshipEnum Relation { get; set; }
         public List<Phone> Phones { get; set; }
         public List<Email> Emails { get; set; }
-
     }
 }
