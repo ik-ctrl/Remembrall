@@ -5,9 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows;
 using DataStorage.Source.Entity;
+using DataStorage.Source.Repository;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
+using Remembrall.Source.Infrastructure.Interfaces;
 using Remembrall.Source.Model;
 
 namespace Remembrall.Source.ViewModel
@@ -15,14 +18,18 @@ namespace Remembrall.Source.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly AppModel _model;
+        private readonly Window _mainWindow;
         private readonly Timer _autoUpdateViewTimer;
         private string _noteDescription;
-        public MainViewModel()
+        private IViewService _viewService;
+        public MainViewModel(Window mainWindow)
         {
+            
             _model = new AppModel();
+            _viewService = new ViewService();
             _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
             _noteDescription = string.Empty;
-            
+            _mainWindow = mainWindow;
         }
 
         #region notes
@@ -186,21 +193,27 @@ namespace Remembrall.Source.ViewModel
         }
         #endregion
 
-
         #region calendar
 
+        /// <summary>
+        /// Текущее время
+        /// </summary>
         public string CurrentTime => DateTime.Now.ToString("HH:mm:ss");
 
+        /// <summary>
+        /// Коллекция специальных дней 
+        /// </summary>
         public ObservableCollection<SpecialDateViewModel> SpecialDatesCollection => _model.SpecialDateCollection;
 
         #endregion
 
         #region update view
+
         /// <summary>
         ///  Метод для автоматического обновления графических элементов раз в 250 миллисекунд
         /// </summary>
         /// <param name="obj"></param>
-        private  void AutoUpdateView(object obj)
+        private void AutoUpdateView(object obj)
         {
             OnPropertyChanged(nameof(CurrentTime));
         }
@@ -215,12 +228,22 @@ namespace Remembrall.Source.ViewModel
             OnPropertyChanged(nameof(CompletedNotesCollection));
             OnPropertyChanged(nameof(ShowCompletedCollection));
         }
+
         #endregion
 
+        #region view navigation
+
+        private RelayCommand _showHolidayViewCommand;
+
+        public RelayCommand ShowHolidayViewCommand => _showHolidayViewCommand ??= new RelayCommand(obj => { });
+
+        private void ShowHolidayViewAsync(IMainRepository repos)
+        {
+            _viewService.ShowHolidayWindowAsync(repos,);
+        }
 
 
-
-
+        #endregion
 
         #region property changed
 

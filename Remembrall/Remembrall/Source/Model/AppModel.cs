@@ -144,6 +144,19 @@ namespace Remembrall.Source.Model
 
         #endregion
 
+        #region clone repositpry
+
+        /// <summary>
+        /// Клонирования репозитория для БД для отдачи  в другие модели.
+        /// </summary>
+        /// <returns></returns>
+        public IMainRepository CloneRepository()
+        {
+            return (IMainRepository)_repository.Clone();
+        }
+
+        #endregion
+
         #region dispose
         public void Dispose()
         {
