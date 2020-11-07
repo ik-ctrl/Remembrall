@@ -24,7 +24,7 @@ namespace Remembrall.Source.ViewModel
         private IViewService _viewService;
         public MainViewModel(Window mainWindow)
         {
-            
+
             _model = new AppModel();
             _viewService = new ViewService();
             _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
@@ -235,11 +235,14 @@ namespace Remembrall.Source.ViewModel
 
         private RelayCommand _showHolidayViewCommand;
 
-        public RelayCommand ShowHolidayViewCommand => _showHolidayViewCommand ??= new RelayCommand(obj => { });
-
-        private void ShowHolidayViewAsync(IMainRepository repos)
+        public RelayCommand ShowHolidayViewCommand => _showHolidayViewCommand ??= new RelayCommand(obj =>
         {
-            _viewService.ShowHolidayWindowAsync(repos,);
+            ShowHolidayViewAsync(_model.CloneRepository(), _mainWindow);
+        });
+
+        private void ShowHolidayViewAsync(IMainRepository repos, Window mainWindow)
+        {
+            _viewService.ShowHolidayWindowAsync(repos, mainWindow);
         }
 
 
