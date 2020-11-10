@@ -28,7 +28,8 @@
                 <MenuItem Header ="Удалить список выполненных заметок" Command="{Binding Path= RemoveCompletedNotesCommand}"/>
                 <MenuItem Header ="Удалить список невыполненных заметок" Command="{Binding Path = RemoveIncompletedNotesCommand}"/>
             </MenuItem>
-            <MenuItem Header="Телефонная книга"/>
+            <MenuItem Header="Телефонная книга" Command="{Binding ShowPhoneBookViewCommand}"/>
+            <MenuItem Header="Праздники" Command="{Binding ShowHolidayViewCommand}"></MenuItem>
         </Menu>
 
         <userControl:NotesView  Grid.Row="1" Grid.Column="0"></userControl:NotesView>
