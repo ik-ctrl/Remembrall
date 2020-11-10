@@ -10,7 +10,7 @@ namespace Remembrall.Source.Infrastructure.Interfaces
         /// </summary>
         /// <param name="owner">Родительское окно</param>
         /// <param name="repository">Репозиторий для работы с БД</param>
-        void ShowHolidayWindowAsync(IMainRepository repository, Window owner);
+        void ShowHolidayWindow(IMainRepository repository, Window owner);
 
         /// <summary>
         /// Метод для редактирования и показа телефоной книги.

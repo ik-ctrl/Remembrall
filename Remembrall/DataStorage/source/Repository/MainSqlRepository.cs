@@ -60,7 +60,7 @@ namespace DataStorage.Source.Repository
 
         public object Clone()
         {
-            return new RemembrallContext();
+            return new MainSqlRepository();
         }
 
         #region Dispose

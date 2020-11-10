@@ -242,9 +242,20 @@ namespace Remembrall.Source.ViewModel
 
         private void ShowHolidayViewAsync(IMainRepository repos, Window mainWindow)
         {
-            _viewService.ShowHolidayWindowAsync(repos, mainWindow);
+            _viewService.ShowHolidayWindow(repos, mainWindow);
         }
 
+        private RelayCommand _showPhoneBookViewCommand;
+
+        public RelayCommand ShowPhoneBookViewCommand=> _showPhoneBookViewCommand??= new RelayCommand(obj =>
+        {
+            ShowPhoneBookViewAsync(_model.CloneRepository(), _mainWindow);
+        } );
+
+        private void ShowPhoneBookViewAsync(IMainRepository repos, Window mainWindow)
+        {
+            _viewService.ShowPhoneBook(repos, mainWindow);
+        }
 
         #endregion
 

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using DataStorage.Source.Repository;
 using Remembrall.Source.Infrastructure.Interfaces;
 using Remembrall.Source.Model;
@@ -9,23 +11,35 @@ using Remembrall.Source.ViewModel;
 
 namespace Remembrall.Source.Infrastructure
 {
-    public class ViewService:IViewService
+    public class ViewService : IViewService
     {
-        public async void ShowHolidayWindowAsync(IMainRepository repository, Window owner)
+        //todo: попробовать Task.Run
+        public  void ShowHolidayWindow(IMainRepository repository, Window owner)
         {
-            var window = new HolidayView()
+            Dispatcher.CurrentDispatcher?.Invoke(() =>
             {
-                DataContext = new HolidayViewModel(repository),
-                Owner=owner
-            };
-            await Task.Run(() => 
-                window.Show()
-                );
+                var window = new HolidayView()
+                {
+                    DataContext = new HolidayViewModel(repository),
+                    Owner = owner
+                };
+                window.Show();
+            });
+
         }
 
-        public async void ShowPhoneBook(IMainRepository repository, Window owner)
+        //todo: попробовать Task.Run
+        public  void ShowPhoneBook(IMainRepository repository, Window owner)
         {
-            throw new NotImplementedException();
+            Dispatcher.CurrentDispatcher?.Invoke(() =>
+            {
+                var window = new PhoneBookView()
+                {
+                    DataContext = new PhoneBookModel(repository),
+                    Owner = owner,
+                };
+                window.Show();
+            });
         }
 
     }
