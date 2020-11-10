@@ -232,14 +232,24 @@ namespace Remembrall.Source.ViewModel
         #endregion
 
         #region view navigation
-
+        /// <summary>
+        /// Поле для хранения комманды открытия окна для редактирования праздников
+        /// </summary>
         private RelayCommand _showHolidayViewCommand;
 
+        /// <summary>
+        /// Свойство для обращения к команде открытия окна праздника
+        /// </summary>
         public RelayCommand ShowHolidayViewCommand => _showHolidayViewCommand ??= new RelayCommand(obj =>
         {
             ShowHolidayViewAsync(_model.CloneRepository(), _mainWindow);
         });
 
+        /// <summary>
+        /// Метод для открытия окна праздников
+        /// </summary>
+        /// <param name="repos">клон репозитория для работы с БД</param>
+        /// <param name="mainWindow">окно - хозяин</param>
         private void ShowHolidayViewAsync(IMainRepository repos, Window mainWindow)
         {
             _viewService.ShowHolidayWindow(repos, mainWindow);
