@@ -36,8 +36,13 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Полная информация о текущем дне
         /// </summary>
-        public string CurrentDayInfo => $"{_day} {Month} : {Description}";
+        public string CurrentDayInfo => $"{_day} {MyConverters.ConvertMonthToString(_month)} : {Description}";
 
-      
+        /// <summary>
+        /// Для получение информации об элементе из БД 
+        /// </summary>
+        public SpecialDate SpecialDate => _specialDate;
+
+
     }
 }
