@@ -20,16 +20,21 @@ namespace Remembrall.Source.ViewModel
         private readonly AppModel _model;
         private readonly Window _mainWindow;
         private readonly Timer _autoUpdateViewTimer;
+        //todo: сделать класс для связи между моделями
+        private readonly Timer _autoUpdateHolidayCollection;
         private string _noteDescription;
         private IViewService _viewService;
+
         public MainViewModel(Window mainWindow)
         {
 
             _model = new AppModel();
             _viewService = new ViewService();
             _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
+            //_autoUpdateHolidayCollection = new Timer(new TimerCallback(AutoUpdateHolidayCollection), null,new Random().Next(0,5), 500);
             _noteDescription = string.Empty;
             _mainWindow = mainWindow;
+            
         }
 
         #region notes
@@ -219,6 +224,15 @@ namespace Remembrall.Source.ViewModel
         }
 
         /// <summary>
+        /// Метод для автоматического обновления коллекции праздников
+        /// </summary>
+        /// <param name="obj"></param>
+        private void AutoUpdateHolidayCollection(object obj)
+        {
+            OnPropertyChanged(nameof(SpecialDatesCollection));
+        }
+
+        /// <summary>
         /// Метод для обновления графический элементов  вручную.
         /// </summary>
         private void UpdateView()
@@ -232,14 +246,24 @@ namespace Remembrall.Source.ViewModel
         #endregion
 
         #region view navigation
-
+        /// <summary>
+        /// Поле для хранения комманды открытия окна для редактирования праздников
+        /// </summary>
         private RelayCommand _showHolidayViewCommand;
 
+        /// <summary>
+        /// Свойство для обращения к команде открытия окна праздника
+        /// </summary>
         public RelayCommand ShowHolidayViewCommand => _showHolidayViewCommand ??= new RelayCommand(obj =>
         {
             ShowHolidayViewAsync(_model.CloneRepository(), _mainWindow);
         });
 
+        /// <summary>
+        /// Метод для открытия окна праздников
+        /// </summary>
+        /// <param name="repos">клон репозитория для работы с БД</param>
+        /// <param name="mainWindow">окно - хозяин</param>
         private void ShowHolidayViewAsync(IMainRepository repos, Window mainWindow)
         {
             _viewService.ShowHolidayWindow(repos, mainWindow);

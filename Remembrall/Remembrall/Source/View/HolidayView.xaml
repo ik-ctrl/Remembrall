@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Remembrall.Source.View"
+        xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
         mc:Ignorable="d"
-        Title="HolidayView" Height="450" Width="800">
-    <Grid>
-        
+        d:DataContext="{d:DesignInstance viewModel:HolidayViewModel}"
+        Title="HolidayView" Height="400" Width="400" 
+        WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <Grid Background="DarkGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Grid.Row="0" Grid.Column="0"  Margin="5" ItemsSource="{Binding Path=DaysCollection}" SelectedItem="{Binding Path=SelectedDay}"/>
+            <ComboBox Grid.Row="0" Grid.Column="1"  Margin="5" ItemsSource="{Binding Path=MonthsNamesCollection}" SelectedItem="{Binding SelectedMonth}" />
+            <TextBox Grid.Row="0" Grid.Column="2" Margin="5"  Text="{Binding HolidayDescription}"/>
+            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="20 6 20 6" Content="Добавить праздник" FontSize="10" Command="{Binding AddSpecialDateCommand}"/>
+        </Grid>
+
+        <ListBox Grid.Row="1" Margin="10" ItemsSource="{Binding Path=SpecialDates, Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock HorizontalAlignment="Stretch" Background="Green"  Foreground="White" Text="{Binding Path=CurrentDayInfo}" 
+                                   TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                        <Button Content="X" Background="Red" Margin="1 0 0 0" 
+                                Command="{Binding Path=DataContext.DeleteSpecialDateCommand,
+                                RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding DataContext,
+                                RelativeSource= {RelativeSource Mode=FindAncestor,AncestorType={x:Type StackPanel}}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
