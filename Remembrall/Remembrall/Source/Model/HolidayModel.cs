@@ -2,7 +2,6 @@
 using System.Linq;
 using DataStorage.Source.Entity;
 using DataStorage.Source.Repository;
-using Microsoft.EntityFrameworkCore;
 using Remembrall.Source.ViewModel;
 
 namespace Remembrall.Source.Model
@@ -81,9 +80,5 @@ namespace Remembrall.Source.Model
                 .ToList();
             return new ObservableCollection<SpecialDateViewModel>(dates);
         }
-
-
-
-
     }
 }

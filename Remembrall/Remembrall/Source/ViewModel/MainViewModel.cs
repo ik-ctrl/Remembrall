@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.OleDb;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using DataStorage.Source.Entity;
 using DataStorage.Source.Repository;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Remembrall.Annotations;
 using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Infrastructure.Interfaces;
@@ -34,7 +31,7 @@ namespace Remembrall.Source.ViewModel
             _model = new AppModel();
             _viewService = new ViewService();
             _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
-            _autoUpdateHolidayCollection = new Timer(new TimerCallback(AutoUpdateHolidayCollection), null,new Random().Next(0,5), 500);
+            //_autoUpdateHolidayCollection = new Timer(new TimerCallback(AutoUpdateHolidayCollection), null,new Random().Next(0,5), 500);
             _noteDescription = string.Empty;
             _mainWindow = mainWindow;
             
