@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Remembrall.Source.View"
+        xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
         mc:Ignorable="d"
-        Title="PhoneBookView" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance viewModel:PhoneBookViewModel}"
+        WindowStyle="ToolWindow"
+        Title="PhoneBookView" Height="300" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
+        <Grid Grid.Column="0" Background="Brown">
+
+        </Grid>
+        
+        <Grid Grid.Column="1" Background="Aqua"></Grid>
+
     </Grid>
+
+
+
 </Window>
