@@ -8,14 +8,14 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:PhoneBookViewModel}"
         WindowStyle="ToolWindow"
-        Title="PhoneBookView" Height="300" Width="800">
+        Title="PhoneBookView" Height="400" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="Brown">
+        <Grid Grid.Column="0" Background="#4682B4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -28,18 +28,54 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0"  Content="Имя:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Grid.Column="1"  Margin="0 20 0 20"/>
+            <TextBox Grid.Row="0" Grid.Column="1"  Margin="0 15 0 15"/>
             <Label Grid.Column="2" Grid.Row="0"  Content="Фамилия:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Grid.Column="3"  Margin="0 20 0 20"/>
-            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"  Margin="15" Content="Добавить запись"></Button>
+            <TextBox Grid.Row="0" Grid.Column="3"   Margin="0 15 0 15"/>
             <Label Grid.Column="1" Grid.Row="1"  Content="Отношение:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
             <ComboBox Grid.Column="2" Grid.Row="1" Margin=" 0 15 0 15"/>
+
+            <Label Grid.Column="0" Grid.Row ="2" Content="Телефон" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <DataGrid Grid.Row="3" Grid.Column="0"  Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5" BorderThickness="2" BorderBrush="Black" 
+                      AutoGenerateColumns="False" IsReadOnly="False"  >
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Label Grid.Column="2" Grid.Row ="2" Content="Почта" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <DataGrid Grid.Row="3" Grid.Column="2"  Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5"  BorderThickness="2" BorderBrush="Black"
+                      AutoGenerateColumns="False" IsReadOnly="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="False" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"  Margin="15" Content="Добавить запись"></Button>
         </Grid>
 
-        <Grid Grid.Column="1" Background="Aqua">
+        <Grid Grid.Column="1" Background="Navy">
+            <ListView Margin="5">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Имя"></GridViewColumn>
+                        <GridViewColumn Header="Фамилия"></GridViewColumn>
+                        <GridViewColumn Header="Отношение"></GridViewColumn>
+                        <GridViewColumn Header="Телефоны"></GridViewColumn>
+                        <GridViewColumn Header="Почта"></GridViewColumn>
+                        
+                    </GridView>
+                    
+                </ListView.View>
 
+            </ListView>
         </Grid>
 
     </Grid>
