@@ -35,7 +35,7 @@ namespace Remembrall.Source.Infrastructure
             {
                 var window = new PhoneBookView()
                 {
-                    DataContext = new PhoneBookModel(repository),
+                    DataContext = new PhoneBookViewModel(repository),
                     Owner = owner,
                 };
                 window.Show();

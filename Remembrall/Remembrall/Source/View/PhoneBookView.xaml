@@ -5,10 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Remembrall.Source.View"
         xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
+        xmlns:infrastructure="clr-namespace:Remembrall.Source.Infrastructure"
+        xmlns:entity="clr-namespace:DataStorage.Source.Entity;assembly=DataStorage"
+        xmlns:interfaces="clr-namespace:Remembrall.Source.Infrastructure.Interfaces"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:PhoneBookViewModel}"
         WindowStyle="ToolWindow"
-        Title="PhoneBookView" Height="400" Width="800">
+        Title="PhoneBookView" 
+        Height="400" Width="800" 
+        ResizeMode="NoResize">
+    <Window.Resources>
+
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
@@ -31,20 +39,20 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0"  Content="Имя:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Grid.Column="1"  Margin="0 15 0 15"/>
+            <TextBox Grid.Row="0" Grid.Column="1"  Margin="0 15 0 15" Text="{Binding PersonName}" />
             <Label Grid.Column="2" Grid.Row="0"  Content="Фамилия:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Grid.Column="3"   Margin="0 15 0 15"/>
+            <TextBox Grid.Row="0" Grid.Column="3"   Margin="0 15 0 15" Text="{Binding PersonSurname}"/>
             <Label Grid.Column="1" Grid.Row="1"  Content="Отношение:" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-            <ComboBox Grid.Column="2" Grid.Row="1" Margin=" 0 15 0 15"/>
+            <ComboBox Grid.Column="2" Grid.Row="1" 
+                      Margin=" 0 15 0 15" 
+                      ItemsSource="{Binding Source={infrastructure:EnumBindingSource {x:Type interfaces:RelationshipEnumViewModel}}}"
+                      SelectedItem="{Binding SelectedRelation, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Column="0" Grid.Row ="2" Content="Телефон" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <DataGrid Grid.Row="3" Grid.Column="0"  Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5" BorderThickness="2" BorderBrush="Black" 
-                      AutoGenerateColumns="False" IsReadOnly="False"  >
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="False"/>
-                </DataGrid.Columns>
+                      AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding Phones}" >
             </DataGrid>
 
             <Label Grid.Column="2" Grid.Row ="2" Content="Почта" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
@@ -70,9 +78,9 @@
                         <GridViewColumn Header="Отношение"></GridViewColumn>
                         <GridViewColumn Header="Телефоны"></GridViewColumn>
                         <GridViewColumn Header="Почта"></GridViewColumn>
-                        
+
                     </GridView>
-                    
+
                 </ListView.View>
 
             </ListView>
