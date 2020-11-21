@@ -17,5 +17,10 @@ namespace DataStorage.Source.Repository
         {
             return _dbSet.FirstOrDefault(x => x.PersonId == id);
         }
+
+        public IEnumerable<Person> GetAllPersonsHaving()
+        {
+            return _dbSet.Include(p => p.Phones).Include(p => p.Emails).ToArray();
+        }
     }
 }
