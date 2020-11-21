@@ -10,7 +10,7 @@ namespace Remembrall.Source.Model
     public class PhoneBookModel
     {
         private IMainRepository _repository;
-        private ObservableCollection<PhoneBookRowViewModel> _rowsPhoneBook;
+        private ObservableCollection<PhoneBookRowViewModel> _phoneBookRows;
 
         public PhoneBookModel(IMainRepository repository)
         {
@@ -21,7 +21,7 @@ namespace Remembrall.Source.Model
         /// <summary>
         /// Коллекция строк для телефонной книги
         /// </summary>
-        public ObservableCollection<PhoneBookRowViewModel> PhoneBookRows => _rowsPhoneBook;
+        public ObservableCollection<PhoneBookRowViewModel> PhoneBookRows => _phoneBookRows;
 
         /// <summary>
         /// Добавить человека в БД
