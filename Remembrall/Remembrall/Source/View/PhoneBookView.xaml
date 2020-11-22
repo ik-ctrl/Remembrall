@@ -49,19 +49,22 @@
                       SelectedItem="{Binding SelectedRelation, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Column="0" Grid.Row ="2" Content="Телефон" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
-                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
             <DataGrid Grid.Row="3" Grid.Column="0"  Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5" BorderThickness="2" BorderBrush="Black" 
-                      AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding Phones}" >
+                      AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding PhonesCollection}" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Телефоны" />
+                </DataGrid.Columns>
             </DataGrid>
 
             <Label Grid.Column="2" Grid.Row ="2" Content="Почта" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.ColumnSpan="2"
                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             <DataGrid Grid.Row="3" Grid.Column="2"  Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5"  BorderThickness="2" BorderBrush="Black"
-                      AutoGenerateColumns="False" IsReadOnly="False">
+                      AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding EmailsCollection}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="False" />
+                    <DataGridTextColumn Header="Телефоны" />
                 </DataGrid.Columns>
             </DataGrid>
 
