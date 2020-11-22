@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,8 +17,8 @@ namespace Remembrall.Source.ViewModel
         private PhoneBookModel _model;
         private string _personName;
         private string _personSurname;
-        private ObservableCollection<string> _phonesCollection;
-        private ObservableCollection<string> _emailsCollection;
+        private ObservableCollection<PhoneViewModel> _phonesCollection;
+        private ObservableCollection<EmailViewModel> _emailsCollection;
         private RelationshipEnumViewModel _selectedRelation;
 
 
@@ -56,7 +57,7 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Набор номеров человека
         /// </summary>
-        public ObservableCollection<string> PhonesCollection
+        public ObservableCollection<PhoneViewModel> PhonesCollection
         {
             get => _phonesCollection;
             set
@@ -70,7 +71,7 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Набор почт человека
         /// </summary>
-        public ObservableCollection<string> EmailsCollection
+        public ObservableCollection<EmailViewModel> EmailsCollection
         {
             get => _emailsCollection;
             set
@@ -129,7 +130,14 @@ namespace Remembrall.Source.ViewModel
             if (!CanAddPerson())
                 return;
             var relation = ConvertRelationVMToRelationship(_selectedRelation);
-            _model.AddPerson(_personName, _personSurname, relation, _phonesCollection.ToList(), _emailsCollection.ToList());
+
+            var phones = new List<string>();
+            _phonesCollection.ToList().ForEach(item => phones.Add(item.Number));
+
+            var emails = new List<string>();
+            _emailsCollection.ToList().ForEach(item=>emails.Add(item.Email));
+
+            _model.AddPerson(_personName, _personSurname, relation,phones, emails);
             ClearInputData();
             UpdateView();
         }
@@ -168,8 +176,8 @@ namespace Remembrall.Source.ViewModel
         {
             _personName = string.Empty;
             _personSurname = string.Empty;
-            _phonesCollection = new ObservableCollection<string>();
-            _emailsCollection = new ObservableCollection<string>();
+            _phonesCollection = new ObservableCollection<PhoneViewModel>();
+            _emailsCollection = new ObservableCollection<EmailViewModel>();
         }
 
         /// <summary>

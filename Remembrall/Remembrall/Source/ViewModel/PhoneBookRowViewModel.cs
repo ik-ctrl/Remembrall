@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DataStorage.Source.Entity;
+using Remembrall.Source.Infrastructure.Interfaces;
 
 namespace Remembrall.Source.ViewModel
 {
     public class PhoneBookRowViewModel
     {
         private Person _person;
-
         private string _phones;
         private string _emails;
+        private RelationshipEnumViewModel _currentRelation;
 
         public PhoneBookRowViewModel(Person person)
         {
             _person = person;
             _phones = ConvertPhoneListToString(_person.Phones);
             _emails = ConvertEmailsListToString(_person.Emails);
+            _currentRelation = (RelationshipEnumViewModel) _person.Relation;
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Степень взаимоотношений
         /// </summary>
-        public RelationshipEnum Relation => _person.Relation;
+        public RelationshipEnumViewModel Relation => _currentRelation;
 
         /// <summary>
         /// Метод для возвращения человека
