@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using DataStorage.Source.Entity;
 using DataStorage.Source.Repository;
+using Microsoft.EntityFrameworkCore;
 using Remembrall.Annotations;
+using Remembrall.Source.Infrastructure;
 using Remembrall.Source.Infrastructure.Interfaces;
 using Remembrall.Source.Model;
 
@@ -18,8 +22,8 @@ namespace Remembrall.Source.ViewModel
         private PhoneBookModel _model;
         private string _personName;
         private string _personSurname;
-        private List<string> _phones;
-        private List<string> _emails;
+        private ObservableCollection<string> _phonesCollection;
+        private ObservableCollection<string> _emailsCollection;
         private RelationshipEnumViewModel _selectedRelation;
 
 
@@ -27,11 +31,11 @@ namespace Remembrall.Source.ViewModel
         {
             _model = new PhoneBookModel(repository);
             IntializeValue();
-            Phones.Add("+79506239278");
-            Phones.CollectionChanged += PhonesCollectionChanged;
         }
 
-
+        /// <summary>
+        /// Имя человека
+        /// </summary>
         public string PersonName
         {
             get => _personName;
@@ -42,6 +46,9 @@ namespace Remembrall.Source.ViewModel
             }
         }
 
+        /// <summary>
+        /// Фамилия человека
+        /// </summary>
         public string PersonSurname
         {
             get => _personSurname;
@@ -52,6 +59,37 @@ namespace Remembrall.Source.ViewModel
             }
         }
 
+        /// <summary>
+        /// Набор номеров человека
+        /// </summary>
+        public ObservableCollection<string> PhonesCollection
+        {
+            get => _phonesCollection;
+            set
+            {
+                if (_phonesCollection == value)
+                    return;
+                _phonesCollection = value;
+            }
+        }
+
+        /// <summary>
+        /// Набор почт человека
+        /// </summary>
+        public ObservableCollection<string> EmailsCollection
+        {
+            get => _emailsCollection;
+            set
+            {
+                if (_emailsCollection == value)
+                    return;
+                _emailsCollection = value;
+            }
+        }
+
+        /// <summary>
+        /// Степень родства
+        /// </summary>
         public RelationshipEnumViewModel SelectedRelation
         {
             get => _selectedRelation;
@@ -63,27 +101,114 @@ namespace Remembrall.Source.ViewModel
                 OnPropertyChanged(nameof(SelectedRelation));
             }
         }
+        
+        /// <summary>
+        /// Записная книжка
+        /// </summary>
+        public ObservableCollection<PhoneBookRowViewModel> PhoneBookRows => _model.PhoneBookRows;
 
-
-        public ObservableCollection<string> Phones { get; set; }
-        private void PhonesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        #region command
+        /// <summary>
+        /// Можно ли добавить нового человека в БД
+        /// </summary>
+        /// <returns></returns>
+        private bool CanAddPerson()
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    {
-                        var item = e.NewItems;
-                        _phones.Add(e.NewItems.ToString());
-                        break;
-                    }
-            }
+            return !string.IsNullOrEmpty(_personName.Trim()) && !string.IsNullOrEmpty(_personSurname.Trim());
         }
 
+        /// <summary>
+        /// Поле для хранения команды
+        /// </summary>
+        private RelayCommand _addPersonCommand;
+        
+        /// <summary>
+        /// Свойство для привязки команды на добавление человека
+        /// </summary>
+        public RelayCommand AddPersonCommand => _addPersonCommand ??= new RelayCommand(obj => { AddNewPerson(); });
 
+        /// <summary>
+        /// Добавление человека в БД
+        /// </summary>
+        private void AddNewPerson()
+        {
+            if (!CanAddPerson())
+                return;
+            var relation = ConvertRelationVMToRelationship(_selectedRelation);
+            _model.AddPerson(_personName, _personSurname, relation, _phonesCollection.ToList(), _emailsCollection.ToList());
+            ClearInputData();
+            UpdateView();
+        }
+
+        /// <summary>
+        /// Поле для хранения команды на удаленияы
+        /// </summary>
+        private RelayCommand _deletePersonCommand;
+
+        /// <summary>
+        /// Свойство для привязки команды на удаление
+        /// </summary>
+        public RelayCommand DeletePersonCommand => _deletePersonCommand ??= new RelayCommand(obj =>
+        {
+             DeletePerson(obj);
+        });
+
+        /// <summary>
+        /// Удаления человека из записаной книжки
+        /// </summary>
+        /// <param name="obj">человек для удаления</param>
+        private void DeletePerson(object obj)
+        {
+            if (obj is PhoneBookRowViewModel item)
+            {
+                _model.DeletePerson(item.GetPerson());
+                UpdateView();
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Инициализация исходных значений
+        /// </summary>
         private void IntializeValue()
         {
-            Phones= new ObservableCollection<string>();
-            //Email= new ObservableCollection<>();
+            _personName = string.Empty;
+            _personSurname = string.Empty;
+            _phonesCollection = new ObservableCollection<string>();
+            _emailsCollection = new ObservableCollection<string>();
+        }
+
+        /// <summary>
+        /// Очистка входных данных
+        /// </summary>
+        private void ClearInputData()
+        {
+            _personName = string.Empty;
+            _personSurname = string.Empty;
+            _phonesCollection.Clear();
+            _emailsCollection.Clear();
+        }
+        
+        /// <summary>
+        /// Обновления Окна
+        /// </summary>
+        private void UpdateView()
+        {
+            OnPropertyChanged(nameof(PersonName));
+            OnPropertyChanged(nameof(PersonSurname));
+            OnPropertyChanged(nameof(PhonesCollection));
+            OnPropertyChanged(nameof(EmailsCollection));
+            OnPropertyChanged(nameof(PhoneBookRows));
+        }
+
+        /// <summary>
+        /// Конвертирует значения отношений
+        /// </summary>
+        /// <param name="relation"></param>
+        /// <returns></returns>
+        private RelationshipEnum ConvertRelationVMToRelationship(RelationshipEnumViewModel relation)
+        {
+            return (RelationshipEnum)relation;
         }
 
         #region notification
