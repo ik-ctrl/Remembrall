@@ -44,12 +44,12 @@ namespace Remembrall.Source.ViewModel
         public RelationshipEnum Relation => _person.Relation;
 
         /// <summary>
-        /// Метод для возвращения идентификатора человека
+        /// Метод для возвращения человека
         /// </summary>
         /// <returns></returns>
-        public int GetPersonId()
+        public Person GetPerson()
         {
-            return _person.PersonId;
+            return _person;
         }
         
         /// <summary>
