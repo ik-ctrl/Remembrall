@@ -15,7 +15,7 @@ namespace Remembrall.Source.Model
         public PhoneBookModel(IMainRepository repository)
         {
             _repository = repository;
-            UpdateRowPhoneBook();
+            _phoneBookRows = UpdateRowPhoneBook();
         }
 
         /// <summary>
@@ -35,7 +35,8 @@ namespace Remembrall.Source.Model
         {
             var newPerson = CreateNewPerson(name, surname, relation, phones, emails);
             _repository.PersonRepository.Add(newPerson);
-            UpdateRowPhoneBook();
+            _repository.SaveChanges();
+            _phoneBookRows=UpdateRowPhoneBook();
         }
 
         /// <summary>
@@ -45,7 +46,8 @@ namespace Remembrall.Source.Model
         public void DeletePerson(Person person)
         {
             _repository.PersonRepository.Delete(person);
-            UpdateRowPhoneBook();
+            _repository.SaveChanges();
+            _phoneBookRows=UpdateRowPhoneBook();
         }
 
         #region private methods
