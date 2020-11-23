@@ -29,7 +29,7 @@
             <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="20 6 20 6" Content="Добавить праздник" FontSize="10" Command="{Binding AddSpecialDateCommand}"/>
         </Grid>
 
-        <ListBox Grid.Row="1" Margin="10" ItemsSource="{Binding Path=SpecialDates, Mode=OneWay}">
+        <ListBox Grid.Row="1" Margin="10" ItemsSource="{Binding Path=SpecialDates, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
