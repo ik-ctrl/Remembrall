@@ -20,6 +20,7 @@ namespace Remembrall.Source.Model
         private delegate void UpdateNotesHandler();
         private event UpdateNotesHandler _updateNotesEvent;
         #endregion
+
         private readonly IMainRepository _repository;
         private ObservableCollection<NoteItemViewModel> _incompletedIncompletedNotesCollection;
         private ObservableCollection<NoteItemViewModel> _completedNotesCollection;
@@ -36,13 +37,29 @@ namespace Remembrall.Source.Model
 
         #region calendar
 
+        /// <summary>
+        /// Коллекция праздников в текущем месяце
+        /// </summary>
         public ObservableCollection<SpecialDateViewModel> SpecialDateCollection => _specialDateCollection;
 
+        /// <summary>
+        /// Обновление коллекии праздников в текущем месяце
+        /// </summary>
+        public void UpdateSpecialDateCollection()
+        {
+            _specialDateCollection = MakeSpecialDateCollection(_repository);
+        }
 
+        /// <summary>
+        /// Метод для создания вью моделей праздеников
+        /// </summary>
+        /// <param name="_repository"></param>
+        /// <returns></returns>
         private ObservableCollection<SpecialDateViewModel> MakeSpecialDateCollection(IMainRepository _repository)
         {
             var currentMonth = DateTime.Now.Month;
             var dates = _repository.SpecialDateRepository.Find(item => item.Month == currentMonth)
+                .OrderBy(item=>item.Day)
                 .Select(date => new SpecialDateViewModel(date)).ToList();
             return new ObservableCollection<SpecialDateViewModel>(dates);
         }
@@ -118,6 +135,9 @@ namespace Remembrall.Source.Model
 
         #region private methods
 
+        /// <summary>
+        /// Обновления коллекции заметок
+        /// </summary>
         private void UpdateNotesCollection()
         {
             _incompletedIncompletedNotesCollection = null;
@@ -126,6 +146,11 @@ namespace Remembrall.Source.Model
             _completedNotesCollection = MakeCompletedNotesCollection(_repository);
         }
 
+        /// <summary>
+        /// Создание коллекции невыполненых заметок
+        /// </summary>
+        /// <param name="_repository"></param>
+        /// <returns></returns>
         private ObservableCollection<NoteItemViewModel> MakeIncompletedNotesCollection(IMainRepository _repository)
         {
             var notes = _repository.NotesRepository.GetAllItem()
@@ -134,6 +159,11 @@ namespace Remembrall.Source.Model
             return new ObservableCollection<NoteItemViewModel>(notes);
         }
 
+        /// <summary>
+        /// Создание коллекции выполненыъ записок
+        /// </summary>
+        /// <param name="_repository"></param>
+        /// <returns></returns>
         private ObservableCollection<NoteItemViewModel> MakeCompletedNotesCollection(IMainRepository _repository)
         {
             var notes = _repository.NotesRepository.GetAllItem()

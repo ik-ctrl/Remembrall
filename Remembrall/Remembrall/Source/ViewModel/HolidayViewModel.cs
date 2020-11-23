@@ -19,7 +19,7 @@ namespace Remembrall.Source.ViewModel
         private ObservableCollection<string> _monthsNames;
         private int _selectedMoth;
         private string _selectedMothName;
-
+        private readonly Messanger _messanger;
         private ObservableCollection<int> _days;
         private int _selectedDay;
 
@@ -28,6 +28,7 @@ namespace Remembrall.Source.ViewModel
         public HolidayViewModel(IMainRepository repository)
         {
             _model = new HolidayModel(repository);
+            _messanger=new Messanger();
             _monthsNames = InitializeMonthsCollection();
             _days = InitializeDaysCollection();
             IntializeSelectedData();
@@ -127,6 +128,7 @@ namespace Remembrall.Source.ViewModel
                 return;
             _model.AddSpecialDate(_selectedDay,_selectedMoth,_holidayDescription);
             UpdateSpecialDatesCollection();
+            _messanger.InvokeUpdate();
         }
 
         /// <summary>
@@ -148,6 +150,7 @@ namespace Remembrall.Source.ViewModel
             var item = obj as SpecialDateViewModel;
             _model.RemoveSpecialDate(item.SpecialDate);
             UpdateSpecialDatesCollection();
+            _messanger.InvokeUpdate();
         }
         #endregion
 
