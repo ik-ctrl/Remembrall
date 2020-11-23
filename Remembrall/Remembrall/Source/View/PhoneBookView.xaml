@@ -12,17 +12,13 @@
         d:DataContext="{d:DesignInstance viewModel:PhoneBookViewModel}"
         WindowStyle="ToolWindow"
         Title="PhoneBookView" 
-        Height="400" Width="800" 
+        Height="400" Width="640" 
         ResizeMode="NoResize">
-    <Window.Resources>
-
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
         <Grid Grid.Column="0" Background="#4682B4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -68,51 +64,31 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-
             <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"  Margin="15" Content="Добавить запись" Command="{Binding AddPersonCommand}"></Button>
         </Grid>
-
         <Grid Grid.Column="1" Background="Navy" >
-
-
             <DataGrid   Margin="5"  BorderThickness="2" BorderBrush="Black"
-                      AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding PhoneBookRows}" >
+                        AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding PhoneBookRows}" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header ="Имя" Binding="{Binding Path=Name}" IsReadOnly="True"/>
                     <DataGridTextColumn Header ="Фамилия" Binding="{Binding Path=Surname}" IsReadOnly="True"/>
                     <DataGridTextColumn Header ="Отношение" Binding="{Binding Path=Relation}" IsReadOnly="True"/>
                     <DataGridTextColumn Header ="Телефон" Binding="{Binding Path=Phones}" IsReadOnly="True"/>
                     <DataGridTextColumn Header ="Почта" Binding="{Binding Path=Emails}" IsReadOnly="True"/>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="60">
+                        <DataGridTemplateColumn.Header > 
+                            <TextBlock Text="Удалить" />
+                        </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Background="Red" Content="X" Command="{Binding Path=DeletePersonCommand}"
+                                <Button Background="Red" Content="X" 
+                                        Command="{Binding Path=DataContext.DeletePersonCommand, RelativeSource={RelativeSource AncestorType={x:Type local:PhoneBookView}}}"
                                         CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-
-            <!--<ListView Margin="5" ItemsSource="{Binding PhoneBookRows}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Фамилия"  DisplayMemberBinding="{Binding Surname}"/>
-                        <GridViewColumn Header="Отношение" DisplayMemberBinding="{Binding Relation}"/>
-                        <GridViewColumn Header="Телефоны" DisplayMemberBinding="{Binding Phones}"/>
-                        <GridViewColumn Header="Почта" DisplayMemberBinding="{Binding Emails}"/>
-                        <GridViewColumn ></GridViewColumn>
-                    </GridView>
-
-
-                </ListView.View>
-
-            </ListView>-->
         </Grid>
-
     </Grid>
-
-
-
 </Window>
