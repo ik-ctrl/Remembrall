@@ -38,11 +38,16 @@ namespace Remembrall.Source.Model
 
         public ObservableCollection<SpecialDateViewModel> SpecialDateCollection => _specialDateCollection;
 
+        public void UpdateSpecialDateCollection()
+        {
+            _specialDateCollection = MakeSpecialDateCollection(_repository);
+        }
 
         private ObservableCollection<SpecialDateViewModel> MakeSpecialDateCollection(IMainRepository _repository)
         {
             var currentMonth = DateTime.Now.Month;
             var dates = _repository.SpecialDateRepository.Find(item => item.Month == currentMonth)
+                .OrderBy(item=>item.Day)
                 .Select(date => new SpecialDateViewModel(date)).ToList();
             return new ObservableCollection<SpecialDateViewModel>(dates);
         }
