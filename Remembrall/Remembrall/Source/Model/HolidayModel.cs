@@ -76,6 +76,8 @@ namespace Remembrall.Source.Model
         {
             var dates = repos.SpecialDateRepository
                 .GetAllItem()
+                .OrderBy(item => item.Month)
+                .ThenBy(item=>item.Day)
                 .Select(item => new SpecialDateViewModel(item))
                 .ToList();
             return new ObservableCollection<SpecialDateViewModel>(dates);

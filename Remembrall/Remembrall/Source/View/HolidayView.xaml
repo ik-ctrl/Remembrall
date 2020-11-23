@@ -33,7 +33,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="Stretch" Background="Green"  Foreground="White" Text="{Binding Path=CurrentDayInfo}" 
+                        <TextBlock HorizontalAlignment="Stretch" Background="Green"  Width="320" Foreground="White" Text="{Binding Path=CurrentDayInfo}" 
                                    TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
                         <Button Content="X" Background="Red" Margin="1 0 0 0" 
                                 Command="{Binding Path=DataContext.DeleteSpecialDateCommand,
