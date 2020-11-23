@@ -103,6 +103,7 @@ namespace Remembrall.Source.ViewModel
         public ObservableCollection<PhoneBookRowViewModel> PhoneBookRows => _model.PhoneBookRows;
 
         #region command
+
         /// <summary>
         /// Можно ли добавить нового человека в БД
         /// </summary>
@@ -167,6 +168,7 @@ namespace Remembrall.Source.ViewModel
                 UpdateView();
             }
         }
+
         #endregion
 
         /// <summary>
