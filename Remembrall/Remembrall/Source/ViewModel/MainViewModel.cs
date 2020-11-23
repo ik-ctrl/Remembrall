@@ -15,13 +15,12 @@ using Remembrall.Source.Model;
 
 namespace Remembrall.Source.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public sealed class MainViewModel : INotifyPropertyChanged
     {
         private readonly AppModel _model;
         private readonly Window _mainWindow;
         private readonly Timer _autoUpdateViewTimer;
-        //todo: сделать класс для связи между моделями
-        private readonly Timer _autoUpdateHolidayCollection;
+        private readonly Messanger _messanger;
         private string _noteDescription;
         private IViewService _viewService;
 
@@ -31,10 +30,10 @@ namespace Remembrall.Source.ViewModel
             _model = new AppModel();
             _viewService = new ViewService();
             _autoUpdateViewTimer = new Timer(new TimerCallback(AutoUpdateView), null, 0, 250);
-            //_autoUpdateHolidayCollection = new Timer(new TimerCallback(AutoUpdateHolidayCollection), null,new Random().Next(0,5), 500);
             _noteDescription = string.Empty;
             _mainWindow = mainWindow;
-            
+            _messanger = new Messanger();
+            _messanger.AddUpdater(AutoUpdateHolidayCollection);
         }
 
         #region notes
@@ -226,9 +225,9 @@ namespace Remembrall.Source.ViewModel
         /// <summary>
         /// Метод для автоматического обновления коллекции праздников
         /// </summary>
-        /// <param name="obj"></param>
-        private void AutoUpdateHolidayCollection(object obj)
+        private void AutoUpdateHolidayCollection()
         {
+            _model.UpdateSpecialDateCollection();
             OnPropertyChanged(nameof(SpecialDatesCollection));
         }
 
@@ -271,10 +270,10 @@ namespace Remembrall.Source.ViewModel
 
         private RelayCommand _showPhoneBookViewCommand;
 
-        public RelayCommand ShowPhoneBookViewCommand=> _showPhoneBookViewCommand??= new RelayCommand(obj =>
-        {
-            ShowPhoneBookViewAsync(_model.CloneRepository(), _mainWindow);
-        } );
+        public RelayCommand ShowPhoneBookViewCommand => _showPhoneBookViewCommand ??= new RelayCommand(obj =>
+          {
+              ShowPhoneBookViewAsync(_model.CloneRepository(), _mainWindow);
+          });
 
         private void ShowPhoneBookViewAsync(IMainRepository repos, Window mainWindow)
         {
@@ -295,7 +294,7 @@ namespace Remembrall.Source.ViewModel
         /// </summary>
         /// <param name="propertyName"></param>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
