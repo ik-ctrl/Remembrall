@@ -1,0 +1,39 @@
+﻿<Window x:Class="Remembrall.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Remembrall"
+        xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
+        xmlns:userControl="clr-namespace:Remembrall.Source.View.UserControl"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
+        Title="Remembrall" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <Binding Path="MainViewModel"></Binding>
+    </Window.DataContext>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Записи">
+                <MenuItem Header ="Удалить список выполненных заметок" Command="{Binding Path= RemoveCompletedNotesCommand}"/>
+                <MenuItem Header ="Удалить список невыполненных заметок" Command="{Binding Path = RemoveIncompletedNotesCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Телефонная книга" Command="{Binding ShowPhoneBookViewCommand}"/>
+            <MenuItem Header="Праздники" Command="{Binding ShowHolidayViewCommand}"></MenuItem>
+        </Menu>
+
+        <userControl:NotesView  Grid.Row="1" Grid.Column="0"></userControl:NotesView>
+        <userControl:CalendarView Grid.Row="1" Grid.Column="1"></userControl:CalendarView>
+
+    </Grid>
+</Window>

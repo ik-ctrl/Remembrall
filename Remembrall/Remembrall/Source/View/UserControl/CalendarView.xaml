@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Remembrall.Source.View.UserControl.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Remembrall.Source.View.UserControl"
+             xmlns:viewModel="clr-namespace:Remembrall.Source.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance viewModel:MainViewModel}">
+    <Grid DataContext="{Binding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding CurrentTime,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"  
+                   FontSize="20" FontFamily="Bold" />
+        <Viewbox Grid.Row="1" Stretch="Uniform" StretchDirection="UpOnly">
+            <Calendar  SelectionMode="MultipleRange"/>
+        </Viewbox>
+        <GroupBox Grid.Row="2" Header="Праздники в этом месяце " Margin="10">
+            <ListBox  ItemsSource="{Binding Path=SpecialDatesCollection, Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="Green" Foreground="White" Text="{Binding Path=CurrentDayInfo}" 
+                                   TextWrapping="Wrap" TextAlignment="Center" Width="345" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+    </Grid>
+</UserControl>
